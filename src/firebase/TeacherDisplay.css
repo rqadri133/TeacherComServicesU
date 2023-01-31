@@ -1,0 +1,52 @@
+
+.button-primary {
+    background-color: rgb(41, 135, 230);
+    color:white;
+    width:100px;
+    height:40px;
+
+}
+
+
+
+.button-orange {
+    background-color: rgb(230, 110, 41);
+    color:white;
+    width:100px;
+    height:40px;
+
+}
+
+input {
+  background-color: white;
+  color: black;
+  height:30px;
+  width:500px;
+  border: 0.5px ;
+  
+
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 45px;
+}
+
+h2{
+  background-color: lightseagreen;
+  color:white;
+} 
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(odd){background-color: lightcyan}
+tr:nth-child(even){background-color: cyan}
+
+th {
+  background-color: lightblue;
+  color: gray;
+}

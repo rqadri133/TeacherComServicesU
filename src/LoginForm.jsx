@@ -2,7 +2,7 @@ import './css/main.css';
 import './css/util.css';
 
 import React, { useContext  } from "react";
-import { Redirect } from "react-router-dom";
+
 import AuthContext from './AuthContext';
 import { useNavigate } from "react-router-dom";
 import {auth } from './config'; 
@@ -32,7 +32,6 @@ signInWithEmailAndPassword(auth, email.value, password.value)
     // ...
   })
   .catch((error) => {
-    const errorCode = error.code;
     const errorMessage = error.message;
 	console.log(errorMessage);
   });

@@ -2,7 +2,7 @@
 import './TeacherDisplay.css'
 import {React, useState , useEffect} from 'react' 
 import {Table} from 'react-bootstrap' ;
-import {Link, useLocation, useParams} from 'react-router-dom';
+import {Link , useParams} from 'react-router-dom';
 import { getDatabase, ref, onValue} from "firebase/database";
 
 
@@ -61,7 +61,7 @@ useEffect(() => {
       setCurrentTeachers(teachers);  
       console.log(currentTeachers); 
       setLoading(false);
-     // getFilteredTeachers(); 
+      getFilteredTeachers(); 
   });
 
 
@@ -75,7 +75,7 @@ useEffect(() => {
  // console.error(currentFilterValue);
     
   
-  }, [currentFilterValue]);
+  }, [currentFilterValue, currentTeachers, database, getFilteredTeachers, uuid]);
   
   if (loading) {
     return <p>Loading...</p>;

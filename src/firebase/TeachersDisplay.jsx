@@ -1,6 +1,6 @@
 
 import './TeacherDisplay.css'
-import {React, useState , useEffect} from 'react' 
+import {React, useState , useEffect, useCallback} from 'react' 
 import {Table} from 'react-bootstrap' ;
 import {Link , useParams} from 'react-router-dom';
 import { getDatabase, ref, onValue} from "firebase/database";
@@ -33,7 +33,8 @@ const  handleChange = (e) => {
 
 };
 
- function getFilteredTeachers (){
+ const  getFilteredTeachers = useCallback((currentFilterValue) => {
+ 
     //  console.log(currentFilterValue);
       if(!currentFilterValue)
       {
@@ -41,13 +42,12 @@ const  handleChange = (e) => {
       } 
       var otherTeachers = currentTeachers.filter((teacher) =>   teacher.TeacherName === currentFilterValue );  
       setCurrentTeachers(otherTeachers);
-    };
+    });
 
 useEffect(() => {
   console.log(uuid);  
   const refer = ref(database, '/Teacher/' + uuid );
-  if(currentFilterValue === '')
-  {
+  
     onValue(refer, (snapshot) => {
         let teachers = [];
         snapshot.forEach(snap => {
@@ -61,18 +61,13 @@ useEffect(() => {
       setCurrentTeachers(teachers);  
       console.log(currentTeachers); 
       setLoading(false);
-      getFilteredTeachers(); 
+   
   });
 
 
-  }
-  else 
-  {
-    getFilteredTeachers();
-
-  }
+  
       
- // console.error(currentFilterValue);
+
     
   
   }, [currentFilterValue, currentTeachers, database, getFilteredTeachers, uuid]);

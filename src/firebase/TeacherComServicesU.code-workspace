@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "TeacherComServicesU",
+			"path": "../.."
+		},
+		{
+			"name": "public",
+			"path": "../../../publicissue/toggleapp/public"
+		}
+	],
+	"settings": {}
+}

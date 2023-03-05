@@ -15,8 +15,6 @@ const uuid = teacherInfo.teacherId;
 var [currentTeachers, setCurrentTeachers] = useState(teachersData);
 const [loading, setLoading] = useState(true);
 var [currentFilterValue, setCurrentValue] = useState('');
-
-
 const database = getDatabase();
 
 const  handleSubmit = (e) => {

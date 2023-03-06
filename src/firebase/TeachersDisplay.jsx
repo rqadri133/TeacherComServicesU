@@ -7,7 +7,7 @@ import { getDatabase, ref, onValue} from "firebase/database";
 
 
 
-function TeachersDisplay()  {
+export function TeachersDisplay()  {
 // age 42 not bad
 var teachersData =  [];
 const teacherInfo = useParams();

@@ -1,7 +1,8 @@
 import './css/main.css';
 import './css/util.css';
 
-import React, { useContext ,Redirect } from "react";
+import React, { useContext  } from "react";
+
 import AuthContext from './AuthContext';
 import { useNavigate } from "react-router-dom";
 import {auth } from './config'; 
@@ -31,7 +32,6 @@ signInWithEmailAndPassword(auth, email.value, password.value)
     // ...
   })
   .catch((error) => {
-    const errorCode = error.code;
     const errorMessage = error.message;
 	console.log(errorMessage);
   });
@@ -40,7 +40,8 @@ signInWithEmailAndPassword(auth, email.value, password.value)
   };
   const  currentUserR  = useContext(AuthContext);
   if (currentUserR) {
-       return <Redirect to="/teachers"  />;
+	let teacherId = currentUserR.uid;
+	navigate(`/teachers/${teacherId}/`);
   }
    return (
 

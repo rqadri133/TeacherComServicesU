@@ -25,29 +25,53 @@ const  handleSubmit = (e) => {
 
 };
 const  handleChange = (e) => {
-    console.log(e.target.value);
     setCurrentValue(e.target.value);
+    
+    getFilteredTeachers(e.target.value);
+    
      
 
 };
 
  const  getFilteredTeachers = useCallback((currentFilterValue) => {
  
-    //  console.log(currentFilterValue);
-      if(!currentFilterValue)
-      {
-        setCurrentTeachers(currentTeachers);
-      } 
-      var otherTeachers = currentTeachers.filter((teacher) =>   teacher.TeacherName === currentFilterValue );  
-      setCurrentTeachers(otherTeachers);
-    });
+     if(!currentFilterValue)
+     {
+        const refer = ref(database, '/Teacher/' + uuid );
+        const teachers = [];
+          
+          onValue(refer, (snapshot) => {
+              snapshot.forEach(snap => {
+                 
+                  let keyName = snap.key;
+                  let dataM = snap.val();
+                  // No Fix DB Structure
+                     teachers.push({"key": keyName , "data": dataM});
+              });
+              setCurrentTeachers(teachers);
+              setLoading(false)
+          
+        });
+
+     }
+     
+     console.log(currentTeachers);
+     currentTeachers = currentTeachers.filter ( teacher => teacher.data.TeacherName.includes(currentFilterValue));
+     setCurrentTeachers(currentTeachers);
+  
+
+
+});
+
+
+
 
 useEffect(() => {
   console.log(uuid);  
   const refer = ref(database, '/Teacher/' + uuid );
-  
+  const teachers = [];
+    
     onValue(refer, (snapshot) => {
-        let teachers = [];
         snapshot.forEach(snap => {
            
             let keyName = snap.key;
@@ -55,20 +79,12 @@ useEffect(() => {
             // No Fix DB Structure
                teachers.push({"key": keyName , "data": dataM});
         });
-        
-      setCurrentTeachers(teachers);  
-      console.log(currentTeachers); 
-      setLoading(false);
-   
-  });
-
-
-  
-      
-
+        setCurrentTeachers(teachers);
+        setLoading(false)
     
-  
-  }, [currentFilterValue, currentTeachers, database, getFilteredTeachers, uuid]);
+  });
+  //setCurrentTeachers(prevTeachers => prevTeachers.add(teachers))  
+}, [ setCurrentTeachers]);
   
   if (loading) {
     return <p>Loading...</p>;

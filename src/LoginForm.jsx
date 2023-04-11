@@ -7,6 +7,7 @@ import AuthContext from './AuthContext';
 import { useNavigate } from "react-router-dom";
 import {auth } from './config'; 
 
+import {Button} from 'react-bootstrap';
 
 import { signInWithEmailAndPassword } from "firebase/auth";  
 
@@ -79,9 +80,50 @@ signInWithEmailAndPassword(auth, email.value, password.value)
 					</div>
 
 					<div className="container-login100-form-btn">
-						<button className="login100-form-btn">
-							Submit
-						</button>
+		 			   
+					<div className="container-login100-form-btn">
+				   
+					   <Button variant="success">Submit</Button>
+		               
+		        	 </div>
+					
+					 &nbsp;
+					 &nbsp;
+					 Or
+	
+					 &nbsp;
+					 &nbsp;
+					 &nbsp;
+					 &nbsp;
+					 &nbsp;
+					 &nbsp;
+					 
+					<div className="container-login100-form-btn">
+				       
+						<Button variant="dark">Apple Login</Button> 
+						<b></b>
+					</div>
+	
+					 &nbsp;
+					 &nbsp;
+					 &nbsp;
+					 &nbsp;
+					 	
+				    <div className="container-login100-form-btn">
+				
+						<Button variant="danger">Google Login</Button>
+				    </div>		
+
+					&nbsp;
+					 &nbsp;
+					 &nbsp;
+					 &nbsp;
+					 	
+				    <div className="container-login100-form-btn">
+				
+						<Button variant="primary">Facebook Login</Button>
+				    </div>		
+
 					</div>
 				</form>
 			</div>

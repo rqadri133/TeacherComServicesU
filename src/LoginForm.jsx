@@ -80,7 +80,7 @@ signInWithEmailAndPassword(auth, email.value, password.value)
 
 					<div className="container-login100-form-btn">
 						<button className="login100-form-btn">
-							Login
+							Submit
 						</button>
 					</div>
 				</form>

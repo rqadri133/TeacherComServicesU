@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: >-
-          npm install && npm install react && npm install react-bootstrap && npm
+          npm install && npm install react && npm install react-bootstrap && npm i react-google-login --legacy-peer-deps  && npm
           install firebase && npm ci &&  npm run build 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:

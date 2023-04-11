@@ -4,15 +4,18 @@ function FancyBorder(props) {
   return (
         <div className={'FancyBorder FancyBorder-' + props.color}>
 
-     <Container>
+     <Container style={{
+          backgroundColor: 'lightblue'
+        }}>
        {props.children}
     </Container>
    </div>
   );
 }
 
-function Dialog(props) {
+export function Dialog(props) {
   return (
+
     <FancyBorder color="blue">
       <h1 className="Dialog-title">
         {props.title}
@@ -24,12 +27,24 @@ function Dialog(props) {
   );
 }
 
+
 function WelcomeDialog() {
   return (
     <Dialog
       title="TeacherCom"
-      message="Language Learning Platform" />
+      message="Language Learning Platform using AI" />
   );
 }
+
+export function CurrentDialog()
+{ 
+  return (
+    <Dialog
+      message="Powered by Blue Machines Inc " />
+  );
+}
+
+
+
 
 export default WelcomeDialog;

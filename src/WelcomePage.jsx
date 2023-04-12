@@ -1,4 +1,5 @@
-import { Container  } from "react-bootstrap";
+import { Container , Nav } from "react-bootstrap";
+
 
 function FancyBorder(props) {
   return (
@@ -39,8 +40,13 @@ function WelcomeDialog() {
 export function CurrentDialog()
 { 
   return (
+   <div>
     <Dialog
       message="Powered by Blue Machines Inc " />
+ 
+   </div>
+
+      
   );
 }
 

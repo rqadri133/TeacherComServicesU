@@ -43,6 +43,8 @@ return (
        </div> 
        <div className="col">
            <label> Determination and untiring efforts to achieve our goals by using great technology and tools suits for your business and functional requirements. 
+           <label> This platform will provide educational courses , the unique feature is you can communicate with your instructor without knowing his language by just using microphone or text . </label> 
+           
             <p> We are new but we have synergy to deliver to customer. </p>  
             <p> Implmentation using Advanced technology Stack </p>
             <p> Microsoft .Net Stack </p>

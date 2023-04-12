@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import {auth } from './config'; 
 
 import {Button} from 'react-bootstrap';
+import { GoogleLogin } from '@react-oauth/google';
 
 import { signInWithEmailAndPassword } from "firebase/auth";  
 
@@ -44,6 +45,14 @@ signInWithEmailAndPassword(auth, email.value, password.value)
 	let teacherId = currentUserR.uid;
 	navigate(`/teachers/${teacherId}/`);
   }
+
+  const responseMessage = (response) => {
+	console.log(response);
+};
+const errorMessage = (error) => {
+	console.log(error);
+}
+
    return (
 
      <div className="limiter">
@@ -110,9 +119,8 @@ signInWithEmailAndPassword(auth, email.value, password.value)
 					 &nbsp;
 					 	
 				    <div className="container-login100-form-btn">
-				
-						<Button variant="danger">Google Login</Button>
-				    </div>		
+					<GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
+                   </div>		
 
 					&nbsp;
 					 &nbsp;

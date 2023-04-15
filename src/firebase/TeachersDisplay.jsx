@@ -11,8 +11,15 @@ function TeachersDisplay()  {
 // age 42 not bad
 var teachersData =  [];
 const teacherInfo = useParams();
+
+ // we don't need to filter by id just show all teachers
 const uuid = teacherInfo.teacherId;
+// global teacher list plus all 
+// under one global id all and then filter based login Assigned Teacher 
+// Generate guid
 var [currentTeachers, setCurrentTeachers] = useState(teachersData);
+
+
 const [loading, setLoading] = useState(true);
 var [currentFilterValue, setCurrentValue] = useState('');
 const database = getDatabase();

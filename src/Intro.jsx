@@ -6,8 +6,10 @@ import React, { useContext  } from "react";
 import AuthContext from './AuthContext';
 import { useNavigate } from "react-router-dom";
 import {auth } from './config'; 
-import {Nav} from 'react-bootstrap';
-
+import {Button, Nav} from 'react-bootstrap';
+import {Container} from 'react-bootstrap';
+import {Row} from 'react-bootstrap';
+import {Col} from 'react-bootstrap';
 
 import { signInWithEmailAndPassword } from "firebase/auth";  
 
@@ -20,28 +22,33 @@ const Proceed = () => {
 
 
 }
+const ProceedToTeacherInfo = () => {
+  navigate("teachersignup/");
+
+
+}
+
 
 return (
 
-  <div className="container">
+  <Container>
      
-     <div className="row">
-		      <div className="col">
-          <button className="btn btn-primary">
-							Sign Up
-						</button>
-			
+     <Row>
+		      <Col>
+           <Button variant="success">Student Sign Up</Button>
       			<button className="btn btn-primary"  onClick={Proceed}>
 							Login
 						</button>
-					</div>
-    </div>
-    <div className="row">
-    <div className="col">
+            <Button variant="info" onClick={ProceedToTeacherInfo}>Teacher Sign Up
+            </Button> 
+					</Col>
+    </Row>
+    <Row>
+    <Col>
        
         <img src="../../intro.png" width="400px" height="400px" />
-       </div> 
-       <div className="col">
+     </Col>  
+       <Col>
            <label> Determination and untiring efforts to achieve our goals by using great technology and tools suits for your business and functional requirements. 
            <label> This platform will provide educational courses , the unique feature is you can communicate with your instructor without knowing his language by just using microphone or text . </label> 
            
@@ -56,11 +63,11 @@ return (
          
             </Nav.Item>
            </Nav>
-       </div>
+       </Col>
 
-       </div>
-   
-    </div>        
+       </Row>
+        
+    </Container>        
 
 );
 

@@ -6,6 +6,7 @@ import TeachersDisplay from './firebase/TeachersDisplay';
 import TeacherContentDisplay from './firebase/TeacherContentDisplay';
 import WelcomePage, { CurrentDialog } from './WelcomePage';
 import Intro from './Intro';
+import TeacherSignUp from './TeacherSignUp';
     
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
          <Route exact path="/" element={<Intro/>} />
          
          <Route exact path="/login" element={<LoginForm/>} />
+        <Route exact path="/teachersignup" element={<TeacherSignUp/>} />
           <Route exact path="/teachers/:teacherId"  element={<TeachersDisplay/>} />
           <Route exact path="/contents" element = {<TeacherContentDisplay/>} />
           </Routes>

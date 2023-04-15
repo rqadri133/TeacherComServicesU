@@ -15,6 +15,8 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 
 const  LoginForm = () => {
 const navigate = useNavigate();
+const localid = "1vlXRxopDGNTzJgtPBy53PoUHDj1";
+// global id is local id
 const handleSubmit = (e) => {
     e.preventDefault();
     const { email, password } = e.target.elements;
@@ -42,11 +44,15 @@ signInWithEmailAndPassword(auth, email.value, password.value)
   };
   const  currentUserR  = useContext(AuthContext);
   if (currentUserR) {
-	let teacherId = currentUserR.uid;
+	let teacherId = currentUserR.uuid;
 	navigate(`/teachers/${teacherId}/`);
   }
 
   const responseMessage = (response) => {
+	if(response)
+	{
+	 navigate(`/teachers/${localid}`)
+	}
 	console.log(response);
 };
 const errorMessage = (error) => {
@@ -109,7 +115,7 @@ const errorMessage = (error) => {
 					 
 					<div className="container-login100-form-btn">
 				       
-						<Button variant="dark">Apple Login</Button> 
+						<Button type="button" variant="dark">Apple Login</Button> 
 						<b></b>
 					</div>
 	
@@ -127,7 +133,7 @@ const errorMessage = (error) => {
 					 &nbsp;
 					 &nbsp;
 					 	
-				    <div className="container-login100-form-btn">
+				    <div type="button" className="container-login100-form-btn">
 				
 						<Button variant="primary">Facebook Login</Button>
 				    </div>		

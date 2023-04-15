@@ -1,5 +1,6 @@
-import { Container , Nav } from "react-bootstrap";
-
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 function FancyBorder(props) {
   return (
@@ -31,10 +32,27 @@ export function Dialog(props) {
 
 function WelcomeDialog() {
   return (
-    <Dialog
+    <Container>
+   <Row>
+  <Col>
+  <Dialog
       title="TeacherCom"
       message="Language Learning Platform using AI" />
+
+  </Col>
+  
+    </Row>   
+  <Row>
+    <Col>
+      &nbsp;
+      
+    </Col>
+  </Row>
+  </Container>
+  
   );
+
+   
 }
 
 export function CurrentDialog()

@@ -138,6 +138,24 @@ iframe {
   margin: 0 auto;
 }
 
+.container-header
+{
+  width: 100%;  
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  align-items: left;
+  padding: 15px;
+  background: #ebeeef;
+
+
+
+}
 .container-login100 {
   width: 100%;  
   min-height: 100vh;

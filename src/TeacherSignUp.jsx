@@ -75,7 +75,7 @@ const TeacherSignUp = () => {
 
       <Form.Group className="mb-3" controlId="formPhone">
         <Form.Label>Enter Phone</Form.Label>
-        <Form.Control name="phoneNumber" type="email" placeholder="Enter phone" />
+        <Form.Control name="phoneNumber" type="phone" placeholder="Enter phone" />
         <Form.Text className="text-muted">
           We'll never share your phone number with anyone else its for Admin Compliance reasons
         </Form.Text>

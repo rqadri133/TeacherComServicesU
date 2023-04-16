@@ -6,7 +6,7 @@ import React, { useContext  } from "react";
 import AuthContext from './AuthContext';
 import { useNavigate } from "react-router-dom";
 import {auth } from './config'; 
-import {Button, Nav} from 'react-bootstrap';
+import {Button, Nav, Stack} from 'react-bootstrap';
 import {Container} from 'react-bootstrap';
 import {Row} from 'react-bootstrap';
 import {Col} from 'react-bootstrap';
@@ -30,9 +30,8 @@ const ProceedToTeacherInfo = () => {
 
 
 return (
-
-  <Container>
-     
+<Stack gap={3}>
+<Container>
      <Row>
 		      <Col>
            <Button variant="success">Student Sign Up</Button>
@@ -43,6 +42,9 @@ return (
             </Button> 
 					</Col>
     </Row>
+</Container>
+  <Container>
+     
     <Row>
     <Col>
        
@@ -69,6 +71,9 @@ return (
         
     </Container>        
 
+
+  </Stack>
+  
 );
 
 

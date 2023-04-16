@@ -14,6 +14,7 @@ const teacherInfo = useParams();
 
  // we don't need to filter by id just show all teachers
 const uuid = teacherInfo.teacherId;
+console.log(uuid);
 // global teacher list plus all 
 // under one global id all and then filter based login Assigned Teacher 
 // Generate guid
@@ -93,9 +94,6 @@ useEffect(() => {
   //setCurrentTeachers(prevTeachers => prevTeachers.add(teachers))  
 }, [ setCurrentTeachers]);
   
-  if (loading) {
-    return <p>Loading...</p>;
-  }
 
  
  return (

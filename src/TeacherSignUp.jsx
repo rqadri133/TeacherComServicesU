@@ -1,15 +1,23 @@
-import React , {useEffect ,useContext , useState,useRef} from "react";
-import {getAuth}  from "firebase/auth";
+import React , { useState,useRef  } from "react";
 import { Container ,Stack} from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import {auth} from './config'
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import {  useNavigate ,useParams } from 'react-router-dom';
 
 
 const TeacherSignUp = () => {
 
   const [uploadedFileName, setUploadedFileName] = useState(null);
   const inputRef = useRef(null);
-  const auth = getAuth();
+ 
+  const navigate = useNavigate();
+  const teacherInfo = useParams();
+
+ // we don't need to filter by id just show all teachers
+const uuid = teacherInfo.teacherId;
+
   const handleUpload = () => {
     inputRef.current?.click();
   };
@@ -19,60 +27,75 @@ const TeacherSignUp = () => {
       setUploadedFileName(inputRef.current.files[0].name);
   };
  
-  const handleSubmit = (e) => {
-    e.preventDefault();
-     const { fullname ,email, password ,details ,phoneNumber } = e.target.elements;
-    console.log(email.value);
+
+
+  const onSubmit = (e) => {
+    e.preventDefault()
+    const {email, password  } = e.target.elements;
+   
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+          navigate("/")
+      })
+      .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode, errorMessage);
+          // ..
+      });
+
  
-  auth
-  .createUser({
-    email: email.value,
-    emailVerified: false,
-    phoneNumber: phoneNumber.value ,
-    password: password.value,
-    displayName: fullname.value,
-    photoURL: uploadedFileName,
-    disabled: false,
-  })
-  .then((userRecord) => {
-    // See the UserRecord reference doc for the contents of userRecord.
-    console.log('Successfully created new user:', userRecord.uid);
+  }
+
+  const handleSignUp = (e) => {
+    
+    e.preventDefault();
+     const {email, password  } = e.target.elements;
+    console.log(email.value);
+    console.log(password.value);
+ 
+   
+  createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+  
+    console.log(user);
+    // ...
   })
   .catch((error) => {
-    console.log('Error creating new user:', error);
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorMessage  );
+	console.log(errorCode);
+	
+	// ..
   });
-  
+
  }
 
   
  
  return (
+ <Container>
 
+ 
    <Stack gap={3}>
    			<Container className="signuplogo">
 						Teacher Sign Up
+            
 					</Container>
-		
-   <Container>
-   
-    <Form backgroud-color='grey'  onSubmit={handleSubmit}>
+		  
+   <label>We need additional information to enroll you as teaacher</label>
+
     
-    <Form.Group className="mb-3" controlId="formBasicName">
-        <Form.Label>Full Name</Form.Label>
-        <Form.Control name="fullname" type="text" placeholder="Enter your Name" />
-        <Form.Text className="text-muted">
-          We'll never share your name with anyone else.
-        </Form.Text>
-      </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control name="email" type="email" placeholder="Enter email" />
-        <Form.Text className="text-muted">
-          We'll never share your email with anyone else.
-        </Form.Text>
-      </Form.Group>
-
+    <Form backgroud-color='grey' onSubmit={onSubmit}>
+    
+  
       <Form.Group className="mb-3" controlId="formPhone">
         <Form.Label>Enter Phone</Form.Label>
         <Form.Control name="phoneNumber" type="phone" placeholder="Enter phone" />
@@ -82,15 +105,15 @@ const TeacherSignUp = () => {
       </Form.Group>
       
 
-
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control name= "password" type="password" placeholder="Password" />
+      <Form.Group className="mb-3" controlId="formEnterDateTime">
+        <Form.Label>Enter Date Time</Form.Label>
+        <Form.Control name= "dob" type="date" placeholder="Enter DOB" />
       </Form.Group>
 
 
+
 	  <Form.Group className="mb-3" controlId="formExp">
-       <Form.Label>Enter Teachers Expereince Details </Form.Label>
+       <Form.Label>Enter Teachers Experience Details </Form.Label>
    
         <textarea name="details" type="textarea" placeholder="Enter Details" rows={5} cols={80} />
         <Form.Text className="text-muted">
@@ -99,33 +122,17 @@ const TeacherSignUp = () => {
       </Form.Group>
  
  
-      <Form.Group className="mb-3" controlId="formUploadImage">
-      <Form.Label>Upload Image </Form.Label>
-      <Form.Control  ref={inputRef}
-        onChange={handleDisplayFileDetails}
-        className="d-none"
-      name= "currentfile" type="file" placeholder="UploadFile" />
-      <button
-        onClick={handleUpload}
-        className={`btn btn-outline-${
-          uploadedFileName ? "success" : "primary"
-        }`}
-      >
-        {uploadedFileName ? uploadedFileName : "Upload"}
-      </button>
-    </Form.Group>
- 
 	  
 	  
-	  <Button variant="primary" type="submit">
-        Submit
+	  <Button variant="primary" type="submit" >
+        Save Data
       </Button>
 
 
     </Form>
-
+ 
+    </Stack>
    </Container>
-   </Stack>
 
       );
 }

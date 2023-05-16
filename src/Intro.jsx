@@ -22,22 +22,31 @@ const Proceed = () => {
 
 
 }
+
 const ProceedToTeacherInfo = () => {
-  navigate("teachersignup/");
+  navigate("signup/");
 
 
 }
 
+
+const ProceedToStudentInfo = () => {
+  navigate("studentsignup/");
+
+
+}
 
 return (
 <Stack gap={3}>
 <Container>
      <Row>
 		      <Col>
-           <Button variant="success">Student Sign Up</Button>
-      			<button className="btn btn-primary"  onClick={Proceed}>
+          <Button className="success"  onClick={ProceedToStudentInfo}>
+							Student Sign Up
+						</Button>
+         		<Button className="primary"  onClick={Proceed}>
 							Login
-						</button>
+						</Button>
             <Button variant="info" onClick={ProceedToTeacherInfo}>Teacher Sign Up
             </Button> 
 					</Col>

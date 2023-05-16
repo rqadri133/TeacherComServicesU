@@ -1,7 +1,7 @@
 import './css/main.css';
 import './css/util.css';
 
-import React, { useContext  } from "react";
+import React, { useContext  ,useState } from "react";
 
 import AuthContext from './AuthContext';
 import { useNavigate } from "react-router-dom";
@@ -10,10 +10,13 @@ import {auth } from './config';
 import {Button} from 'react-bootstrap';
 import { GoogleLogin } from '@react-oauth/google';
 
-import { signInWithEmailAndPassword } from "firebase/auth";  
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword , updateProfile } from "firebase/auth";  
 
 
 const  LoginForm = () => {
+
+	const [loading, setLoading] = useState(true);
+
 const navigate = useNavigate();
 const localid = "1vlXRxopDGNTzJgtPBy53PoUHDj1";
 // global id is local id
@@ -42,6 +45,68 @@ signInWithEmailAndPassword(auth, email.value, password.value)
 
 
   };
+
+  const onSubmit = (e) => {
+	e.preventDefault();
+	e.preventDefault();
+    const { email, password  } = e.target.elements;
+  console.log(email.value);
+  
+	if (email &&  password) {
+	  registerUser(email,  password).then(() => {
+		console.log("User created")
+	  })
+	};
+  };
+  
+  
+  const registerUser = async (email,  password) => {
+	try {
+	  console.log("> Registering user")
+      setLoading(true);
+	  const {
+		user
+	  } = await createUserWithEmailAndPassword(auth, email, password)
+  
+	  console.log("> Updating profile")
+
+	  await updateProfile(user, {
+		displayName: "heu josu",
+	  });
+  
+	  window.location.pathname = `/subscriptions`;
+	} catch (e) {
+	  console.log(e)
+	}
+    setLoading(false);
+  }
+  
+
+
+  const handleSubmitNew = (e) => {
+    e.preventDefault();
+    const { email, password } = e.target.elements;
+  console.log(email.value);
+  
+  createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorMessage  );
+	console.log(errorCode);
+	
+	// ..
+  });
+
+
+  }
+
   const  currentUserR  = useContext(AuthContext);
   if (currentUserR) {
 	let teacherId = currentUserR.uuid;

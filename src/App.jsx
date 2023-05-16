@@ -6,6 +6,8 @@ import TeachersDisplay from './firebase/TeachersDisplay';
 import TeacherContentDisplay from './firebase/TeacherContentDisplay';
 import WelcomePage, { CurrentDialog } from './WelcomePage';
 import Intro from './Intro';
+import Signup from './Signup';
+import StudentSignUp from './StudentSignUp';
 import TeacherSignUp from './TeacherSignUp';
     
 
@@ -21,8 +23,12 @@ function App() {
          <Route exact path="/" element={<Intro/>} />
          
          <Route exact path="/login" element={<LoginForm/>} />
-        <Route exact path="/teachersignup" element={<TeacherSignUp/>} />
-          <Route exact path="/teachers/:teacherId"  element={<TeachersDisplay/>} />
+        <Route exact path="/signup" element={<Signup/>} />
+        <Route exact path="/studentsignup" element={<StudentSignUp/>} />
+        <Route exact path="/teachersignup/:userId" element={<TeacherSignUp/>} />
+        
+              
+   <Route exact path="/teachers/:teacherId"  element={<TeachersDisplay/>} />
           <Route exact path="/contents" element = {<TeacherContentDisplay/>} />
           </Routes>
      </BrowserRouter>  

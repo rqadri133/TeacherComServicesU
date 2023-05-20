@@ -45,7 +45,7 @@ const  handleChange = (e) => {
  
      if(!currentFilterValue)
      {
-        const refer = ref(database, '/Teacher/' + uuid );
+        const refer = ref(database, '/Teacher/modelData' + uuid );
         const teachers = [];
           
           onValue(refer, (snapshot) => {

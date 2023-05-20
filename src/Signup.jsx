@@ -17,14 +17,16 @@ const Signup = () => {
     const onSubmit = (e) => {
       e.preventDefault()
      
+      
+
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
             console.log(user.uid);
-            const userId = userCredential.uid;
-            navigate("/")
-            navigate(`/teachersignup/${userId}/`);
+            const userId = user.uid;
+
+            navigate(`/teachersignup/${userId}`);
             // ...
         })
         .catch((error) => {

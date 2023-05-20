@@ -24,31 +24,7 @@ const StudentSignUp = () => {
   };
  
 
-  function SaveStudentDetails(recordRef, details)
-  {
-    const referenceChild = ref(database, '/Student/' + recordRef.uuid );
-    referenceChild.set(
-      {
-        CreatedBy: recordRef.uuid ,
-        CreatedDate : new Date(),
-        ID: 321113,
-        TeacherClassificationID: 32113,
-        TeacherDOB: "09/2011",
-        TeacherDescriptoon: details ,
-        TeacherExpertLevel: 3,
-        TeacherName: "Liz Hemp",
-        UID: recordRef.uuid,
-        imageUrl: recordRef.photoURL
-         
-     
-      }
-
-      
-    ); 
-
-
-
-  }
+  
 
   const handleSubmit = (e) => {
     

@@ -1,81 +1,83 @@
 import React , { useState,useRef  } from "react";
 import { Container ,Stack} from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import {auth} from './config'
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import {  useNavigate ,useParams } from 'react-router-dom';
+import {NavLink,  useNavigate ,useParams } from 'react-router-dom';
+import { getDatabase, ref, set} from "firebase/database";
+import Panel from "./Panel";
+
 
 
 const TeacherSignUp = () => {
 
-  const [uploadedFileName, setUploadedFileName] = useState(null);
+
+  
+  const [phoneNumber, setPhone] = useState('');
+    const [details, setDetails] = useState('');
+    const [starttimeof, setTime] = useState('');
+    const [years, setYears] = useState('');
+    const [name, setName] = useState('');
+    
+
+
   const inputRef = useRef(null);
  
   const navigate = useNavigate();
   const teacherInfo = useParams();
 
  // we don't need to filter by id just show all teachers
-const uuid = teacherInfo.teacherId;
+const uuid = teacherInfo.userId;
+console.log(uuid);
+const database = getDatabase();
 
-  const handleUpload = () => {
-    inputRef.current?.click();
-  };
-  const handleDisplayFileDetails = () => {
-    console.log(inputRef.current?.files[0].name);
-    inputRef.current?.files &&
-      setUploadedFileName(inputRef.current.files[0].name);
-  };
+
+
+
+ var keym = uuid;
  
 
-
-  const onSubmit = (e) => {
-    e.preventDefault()
-    const {email, password  } = e.target.elements;
+ 
+  
+  const OnSubmit = (e) => {
+    e.preventDefault();
    
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          console.log(user);
-          navigate("/")
-      })
-      .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(errorCode, errorMessage);
-          // ..
-      });
+   
+    //const {  phoneNumber , details ,starttimeof  } = e.target.elements;
+    console.log (phoneNumber);
+    
+     
+    //const usersRef = ref(database, '/Teacher/'  );
+     // example set for new firebase version improved ....    
+     // Continue      
+     
+   // var current = modelData[keym];
+     set(ref(database, '/Teacher/' + uuid ), 
+      {
+        CreatedBy : '',
+        CreatedDate: '',
+        ID: '',
+        TeacherClassificationID: 11,
+        TeacherDOB: '09/2011',
+        TeacherDescription: 'red',
+        TeacherExpertLevel: 3,
+        TeacherName : "Liz Hemp",
+        Phone: phoneNumber ,
+        Experience : details,
+        YearsOfTeaching: years,
+        StartDate : starttimeof,
+        UID: keym,
+        imageUrl : "https://firebasestorage.googleapis.com/v0/b/cubmessenger.appspot.com/o/fcIuzRj0uATpOm5Rb8HL4bbiRB03%2F613433863438.jpg?alt=media&token=542ad057-2856-45d1-9420-393989dd7fe5"
+      }
+      
+  );
+  navigate("/login");
+    //console.log(usersRef);
 
- 
+  
+
+
   }
 
-  const handleSignUp = (e) => {
-    
-    e.preventDefault();
-     const {email, password  } = e.target.elements;
-    console.log(email.value);
-    console.log(password.value);
- 
-   
-  createUserWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed in 
-    const user = userCredential.user;
-  
-    console.log(user);
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log(errorMessage  );
-	console.log(errorCode);
-	
-	// ..
-  });
 
- }
+  
 
   
  
@@ -84,52 +86,115 @@ const uuid = teacherInfo.teacherId;
 
  
    <Stack gap={3}>
-   			<Container className="signuplogo">
-						Teacher Sign Up
-            
-					</Container>
 		  
-   <label>We need additional information to enroll you as teaacher</label>
+<Container>
 
-    
-
-    <Form backgroud-color='grey' onSubmit={onSubmit}>
-    
-  
-      <Form.Group className="mb-3" controlId="formPhone">
-        <Form.Label>Enter Phone</Form.Label>
-        <Form.Control name="phoneNumber" type="phone" placeholder="Enter phone" />
-        <Form.Text className="text-muted">
-          We'll never share your phone number with anyone else its for Admin Compliance reasons
-        </Form.Text>
-      </Form.Group>
+<main >        
+    <section>
+        <div>
+        <div className="signuplogo">
+        Teacher Sign Up
+      </div>
       
+            <div> 
+            
+       <Panel isActive={true}>
+         Please make sure you enter enough information to be qualified for teacher.
+       </Panel>
 
-      <Form.Group className="mb-3" controlId="formEnterDateTime">
-        <Form.Label>Enter Date Time</Form.Label>
-        <Form.Control name= "dob" type="date" placeholder="Enter DOB" />
-      </Form.Group>
+      
+                  
+                <form>                                                                                            
+                    <div>
+                        <label htmlFor="phoneNumber">
+                            Phone Number
+                        </label>
+                        <input
+                            type="phoneNumber"
+                            label="Phone Number"
+                            value={phoneNumber}
+                            onChange={(e) => setPhone(e.target.value)}  
+                            required                                    
+                            placeholder="Enter Phone Number"                                
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="password">
+                            Password
+                        </label>
+                        <input
+                            type="date"
+                            label="Enter Availibility From"
+                            value={starttimeof}
+                            onChange={(e) => setTime(e.target.value)} 
+                            required                                 
+                            placeholder="Enter Availibility"              
+                        />
+                    </div>                                             
+
+                    <div>
+                        <label htmlFor="name">
+                            Name
+                        </label>
+                        <input
+                            type="text"
+                            label="Enter Your Name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)} 
+                            required                                 
+                            placeholder="Enter Availibility"              
+                        />
+                    </div>                                             
+
+                    <div>
+                        <label htmlFor="details">
+                            Enter Details
+                        </label>
+                        <textarea name="details" type="textarea" placeholder="Enter Details" rows={5} cols={80} 
+                           value={details}
+                           onChange={(e) => setDetails(e.target.value)} />
+                    </div>                                             
+
+                    <div>
+                        <label htmlFor="details">
+                            Enter Years of Teaching Experience
+                        </label>
+                        <input
+                            type="number"
+                            label="Enter Years"
+                            value={years}
+                            onChange={(e) => setYears(e.target.value)} 
+                            required                                 
+                            placeholder="Enter Years"              
+                        />
+
+                     
+                     
+                                         </div>                                             
 
 
 
-	  <Form.Group className="mb-3" controlId="formExp">
-       <Form.Label>Enter Teachers Experience Details </Form.Label>
-   
-        <textarea name="details" type="textarea" placeholder="Enter Details" rows={5} cols={80} />
-        <Form.Text className="text-muted">
-          We'll share highlights of your expereince to Students
-        </Form.Text>
-      </Form.Group>
- 
- 
-	  
-	  
-	  <Button variant="primary" type="submit" >
-        Save Data
-      </Button>
-
-
-    </Form>
+                    <button className='btn btn-primary'
+                        type="submit" 
+                        onClick={OnSubmit}                        
+                    >  
+                        Submit                             
+                    </button>
+                                                                 
+                </form>
+               
+                <p>
+                    Already have an account?{' '}
+                    <NavLink to="/login">
+                        Sign in
+                    </NavLink>
+                </p>                   
+            </div>
+        </div>
+    </section>
+</main>
+</Container>
  
     </Stack>
    </Container>

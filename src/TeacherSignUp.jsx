@@ -3,6 +3,10 @@ import { Container ,Stack} from 'react-bootstrap';
 import {NavLink,  useNavigate ,useParams } from 'react-router-dom';
 import { getDatabase, ref, set} from "firebase/database";
 import Panel from "./Panel";
+import { useMemo } from 'react'
+import Select from 'react-select'
+
+import countryList from 'react-select-country-list'
 
 
 
@@ -16,6 +20,9 @@ const TeacherSignUp = () => {
     const [years, setYears] = useState('');
     const [name, setName] = useState('');
     
+    const [countrycodesel, setCountryCode] = useState('')
+    const options = useMemo(() => countryList().getData(), [])
+  
 
 
   const inputRef = useRef(null);
@@ -53,17 +60,14 @@ const database = getDatabase();
       {
         CreatedBy : '',
         CreatedDate: '',
-        ID: '',
         TeacherClassificationID: 11,
-        TeacherDOB: '09/2011',
-        TeacherDescription: 'red',
-        TeacherExpertLevel: 3,
-        TeacherName : "Liz Hemp",
+        TeacherName : name,
         Phone: phoneNumber ,
         Experience : details,
         YearsOfTeaching: years,
         StartDate : starttimeof,
         UID: keym,
+        CountryCode: countrycodesel,
         imageUrl : "https://firebasestorage.googleapis.com/v0/b/cubmessenger.appspot.com/o/fcIuzRj0uATpOm5Rb8HL4bbiRB03%2F613433863438.jpg?alt=media&token=542ad057-2856-45d1-9420-393989dd7fe5"
       }
       
@@ -77,7 +81,10 @@ const database = getDatabase();
   }
 
 
-  
+  const changeCountryCode = value => {
+    setCountryCode(value)
+  }
+
 
   
  
@@ -143,7 +150,7 @@ const database = getDatabase();
                             value={name}
                             onChange={(e) => setName(e.target.value)} 
                             required                                 
-                            placeholder="Enter Availibility"              
+                            placeholder="Enter your first and Last Name only"              
                         />
                     </div>                                             
 
@@ -169,9 +176,17 @@ const database = getDatabase();
                             placeholder="Enter Years"              
                         />
 
+                       <div>
+                        <label htmlFor="country">
+                            Select Country 
+                        </label>
+                        <Select options={options} value={countrycodesel} onChange={changeCountryCode} />
+
+                      </div>                                             
+                
                      
-                     
-                                         </div>                                             
+               
+               </div>                                             
 
 
 

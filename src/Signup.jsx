@@ -80,20 +80,7 @@ const Signup = () => {
                             />
                         </div>                                             
 
-                        <div>
-                            <label htmlFor="name">
-                                Full Name
-                            </label>
-                            <input
-                                type="text"
-                                label="Enter Full Name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)} 
-                                required                                 
-                                placeholder="Name"              
-                            />
-                        </div>                                             
-
+                 
 
                         <button className='btn btn-primary'
                             type="submit" 

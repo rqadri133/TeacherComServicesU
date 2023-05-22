@@ -45,7 +45,7 @@ const  handleChange = (e) => {
  
      if(!currentFilterValue)
      {
-        const refer = ref(database, '/Teacher/modelData' + uuid );
+        const refer = ref(database, '/Teacher'  );
         const teachers = [];
           
           onValue(refer, (snapshot) => {
@@ -53,6 +53,7 @@ const  handleChange = (e) => {
                  
                   let keyName = snap.key;
                   let dataM = snap.val();
+                  console.log(dataM);
                   // No Fix DB Structure
                      teachers.push({"key": keyName , "data": dataM});
               });
@@ -76,7 +77,7 @@ const  handleChange = (e) => {
 
 useEffect(() => {
   console.log(uuid);  
-  const refer = ref(database, '/Teacher/' + uuid );
+  const refer = ref(database, '/Teacher/'  );
   const teachers = [];
     
     onValue(refer, (snapshot) => {

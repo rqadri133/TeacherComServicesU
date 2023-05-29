@@ -5,6 +5,7 @@ import { getDatabase, ref, set} from "firebase/database";
 import Panel from "./Panel";
 import { useMemo } from 'react'
 import Select from 'react-select'
+import {  createUserWithEmailAndPassword } from 'firebase/auth';
 
 import countryList from 'react-select-country-list'
 

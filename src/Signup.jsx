@@ -2,6 +2,7 @@ import React , {useState} from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 import {  createUserWithEmailAndPassword  } from 'firebase/auth';
+
 import {auth}  from './config';
 import { Container } from 'react-bootstrap';
  
@@ -11,7 +12,6 @@ const Signup = () => {
  
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('');
-    const [name, setName] = useState('');
     
  
     const onSubmit = (e) => {
@@ -46,7 +46,7 @@ const Signup = () => {
         <section>
             <div>
             <div className="signuplogo">
-						Teacher Sign Up
+						Student Sign Up
 					</div>
 		  
    

@@ -1,5 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import 'react-languages-select/css/react-languages-select.css';
+ 
+//OR import sass module
 
 import './index.css';
 import App from './App';

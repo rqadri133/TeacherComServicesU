@@ -1,134 +1,267 @@
-import React , { useState,useRef} from "react";
-import { Container } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import React , { useState,useRef  } from "react";
+import { Container ,Stack} from 'react-bootstrap';
+import {NavLink,  useNavigate ,useParams } from 'react-router-dom';
+import { getDatabase, ref, set} from "firebase/database";
+import Panel from "./Panel";
+import { useMemo } from 'react'
+import Select from 'react-select'
+import {auth}  from './config';
+import {  createUserWithEmailAndPassword  } from 'firebase/auth';
+import ReactLanguageSelect from 'react-languages-select';
+ 
+//import css module
 
-import { getDatabase, ref} from "firebase/database"; 
-import { createUserWithEmailAndPassword  } from "firebase/auth";
-import {auth} from './config';
+
+import countryList from 'react-select-country-list'
+
 
 
 const StudentSignUp = () => {
 
-  const [uploadedFileName, setUploadedFileName] = useState(null);
-  const inputRef = useRef(null);
-  const database = getDatabase();
-
-  const handleUpload = () => {
-    inputRef.current?.click();
-  };
-  const handleDisplayFileDetails = () => {
-    console.log(inputRef.current?.files[0].name);
-    inputRef.current?.files &&
-      setUploadedFileName(inputRef.current.files[0].name);
-  };
- 
 
   
-
-  const handleSubmit = (e) => {
+  const [phoneNumber, setPhone] = useState('');
+    const [details, setDetails] = useState('');
+    const [starttimeof, setTime] = useState('');
     
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [langaugeCode , setLanguage] = useState('');
+    const [uuid , setUID] = useState('');    
+    
+    const [countrycodesel, setCountryCode] = useState('')
+    const options = useMemo(() => countryList().getData(), [])
+  
+
+
+ 
+  const navigate = useNavigate();
+
+ // we don't need to filter by id just show all teachers
+
+const database = getDatabase();
+
+
+
+
+ 
+  
+ 
+const onSelectLanguage = (languageCode) => {
+    setLanguage(langaugeCode);
+}
+  
+  const OnSubmit = (e) => {
     e.preventDefault();
-     const {email, password  } = e.target.elements;
-    console.log(email.value);
-    console.log(password.value);
- 
-createUserWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed in 
-    const user = userCredential.user;
-    // ...
-    //SaveTeacherDetails(user, details,fullname);
-    
-    console.log('Successfully created new user:', user.uid);
+    createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log(user.uid);
+       const umid = user.uid;
+       setUID(umid);
+        // ...
+    })
+    .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        // ..
+    });
 
-  })
-  .catch((error) => {
-    console.log('Error creating new user:', error);
-  });
+
+
+   
+    //const {  phoneNumber , details ,starttimeof  } = e.target.elements;
+    console.log (phoneNumber);
+    
+     
+    //const usersRef = ref(database, '/Teacher/'  );
+     // example set for new firebase version improved ....    
+     // Continue      
+     
+   // var current = modelData[keym];
+     set(ref(database, '/Student/' + uuid ), 
+      {
+        CreatedBy : '',
+        CreatedDate: '',
+        studentClassificationID: 11,
+        StudentName : name,
+        Phone: phoneNumber ,
+        WhatToLearn : details,
+        StartDate : starttimeof,
+        UID: uuid,
+        CountryCode: countrycodesel,
+        PreferedLanguage: langaugeCode,
+        imageUrl : "https://firebasestorage.googleapis.com/v0/b/cubmessenger.appspot.com/o/fcIuzRj0uATpOm5Rb8HL4bbiRB03%2F613433863438.jpg?alt=media&token=542ad057-2856-45d1-9420-393989dd7fe5"
+      }
+      
+  );
+  navigate("/login");
+    //console.log(usersRef);
 
   
- }
+
+
+  }
+
+
+  const changeCountryCode = value => {
+    setCountryCode(value)
+  }
+
 
   
  
  return (
- <Container onSubmit={handleSubmit} >
-  <main>
-   <section>
+ <Container>
 
-   			<div className="signuplogo">
-						Student Sign Up
-					</div>
+ 
+   <Stack gap={3}>
 		  
-   
- 
-    <div>
+<Container>
 
-   <div>
-    <Form backgroud-color='grey'>
-    
-    <Form.Group className="mb-3" controlId="formBasicName">
-        <Form.Label>Student Full Name</Form.Label>
-        <Form.Control name="fullname" type="text" placeholder="Enter your Name" />
-        <Form.Text className="text-muted">
-          We'll never share your name with anyone else.
-        </Form.Text>
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control name="email" type="email" placeholder="Enter email" />
-        <Form.Text className="text-muted">
-          We'll never share your email with anyone else.
-        </Form.Text>
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="formPhone">
-        <Form.Label>Enter Phone</Form.Label>
-        <Form.Control name="phoneNumber" type="phone" placeholder="Enter phone" />
-        <Form.Text className="text-muted">
-          We'll never share your phone number with anyone else its for Admin Compliance reasons
-        </Form.Text>
-      </Form.Group>
+<main >        
+    <section>
+        <div>
+        <div className="signuplogo">
+        Student Sign Up
+      </div>
       
+            <div> 
+            
+       <Panel isActive={true}>
+         Please make sure you enter enough information to be know about your study goals
+       </Panel>
+
+      
+                  
+                <form>
+                <div>
+                        <label htmlFor="langauge">
+                            What Langauage you want to choose to communicate
+                        </label>
+                        <ReactLanguageSelect
+    defaultLanguage="en"
+    onSelect={onSelectLanguage} />
+                      </div>                                             
+              
+                <div>
+                       <label htmlFor="email-address">
+                                Email address
+                            </label>
+                            <input
+                                type="email"
+                                label="Email address"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}  
+                                required                                    
+                                placeholder="Email address"                                
+                            />
+                        </div>
+
+                        <div>
+                            <label htmlFor="password">
+                                Password
+                            </label>
+                            <input
+                                type="password"
+                                label="Create password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)} 
+                                required                                 
+                                placeholder="Password"              
+                            />
+                        </div>                                             
+                                                                                           
+                    <div>
+                        <label htmlFor="phoneNumber">
+                            Phone Number
+                        </label>
+                        <input
+                            type="phoneNumber"
+                            label="Phone Number"
+                            value={phoneNumber}
+                            onChange={(e) => setPhone(e.target.value)}  
+                            required                                    
+                            placeholder="Enter Phone Number"                                
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="password">
+                            Enter Availibility From
+                        </label>
+                        <input
+                            type="date"
+                            label="Enter Availibility From"
+                            value={starttimeof}
+                            onChange={(e) => setTime(e.target.value)} 
+                            required                                 
+                            placeholder="Enter Availibility"              
+                        />
+                    </div>                                             
+
+                    <div>
+                        <label htmlFor="name">
+                            Name
+                        </label>
+                        <input
+                            type="text"
+                            label="Enter Your Name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)} 
+                            required                                 
+                            placeholder="Enter your first and Last Name only"              
+                        />
+                    </div>                                             
+
+                    <div>
+                        <label htmlFor="details">
+                        What you want to achieve , Enter goals details
+                        </label>
+                        <textarea name="details" type="textarea" placeholder="Enter Details" rows={5} cols={80} 
+                           value={details}
+                           onChange={(e) => setDetails(e.target.value)} />
+                    </div>                                             
+
+                       <div>
+                        <label htmlFor="country">
+                            Select Country 
+                        </label>
+                        <Select options={options} value={countrycodesel} onChange={changeCountryCode} />
+
+                      </div>                                             
+                
+                     
+               
+                                                           
 
 
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control name= "password" type="password" placeholder="Password" />
-      </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formEnterDateTime">
-        <Form.Label>When would you like to start</Form.Label>
-        <Form.Control name= "dob" type="date" placeholder="Enter DOB" />
-      </Form.Group>
-
-
-
-	  <Form.Group className="mb-3" controlId="formExp">
-       <Form.Label>Enter Student Details of Langauge Learning </Form.Label>
-   
-        <textarea name="details" type="textarea" placeholder="Enter Details" rows={5} cols={80} />
-        <Form.Text className="text-muted">
-          We'll share highlights of your expereince to Students
-        </Form.Text>
-      </Form.Group>
+                    <button className='btn btn-primary'
+                        type="submit" 
+                        onClick={OnSubmit}                        
+                    >  
+                        Submit                             
+                    </button>
+                                                                 
+                </form>
+               
+                <p>
+                    Already have an account?{' '}
+                    <NavLink to="/login">
+                        Sign in
+                    </NavLink>
+                </p>                   
+            </div>
+        </div>
+    </section>
+</main>
+</Container>
  
- 
-	  
-	  
-	  <Button variant="primary" type="submit" >
-        Save Data
-      </Button>
-
-
-    </Form>
-    </div>    
-  
-    </div>
-   </section>
-   </main>
+    </Stack>
    </Container>
 
       );

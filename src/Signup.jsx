@@ -46,8 +46,8 @@ const Signup = () => {
         <section>
             <div>
             <div className="signuplogo">
-						Student Sign Up
-					</div>
+						Teacher Sign Up Credentials Required
+		    </div>
 		  
    
                 <div>                  

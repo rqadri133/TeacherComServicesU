@@ -99,12 +99,10 @@ const database = getDatabase();
 
 <main >        
     <section>
-        <div>
         <div className="signuplogo">
-        Teacher Sign Up Additional Information
-      </div>
+           Teacher Sign Up Additional Information
+           </div>
       
-            <div> 
             
        <Panel isActive={true}>
          Please make sure you enter enough information to be qualified for teacher.
@@ -206,8 +204,7 @@ const database = getDatabase();
                         Sign in
                     </NavLink>
                 </p>                   
-            </div>
-        </div>
+        
     </section>
 </main>
 </Container>

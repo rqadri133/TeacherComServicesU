@@ -124,12 +124,11 @@ const onSelectLanguage = (languageCode) => {
 
 <main >        
     <section>
-        <div>
+      <div>  
         <div className="signuplogo">
         Student Sign Up
       </div>
       
-            <div> 
             
        <Panel isActive={true}>
          Please make sure you enter enough information to be know about your study goals
@@ -256,7 +255,8 @@ const onSelectLanguage = (languageCode) => {
                     </NavLink>
                 </p>                   
             </div>
-        </div>
+
+        
     </section>
 </main>
 </Container>

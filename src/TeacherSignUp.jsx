@@ -101,7 +101,7 @@ const database = getDatabase();
     <section>
         <div>
         <div className="signuplogo">
-        Teacher Sign Up
+        Teacher Sign Up Additional Information
       </div>
       
             <div> 

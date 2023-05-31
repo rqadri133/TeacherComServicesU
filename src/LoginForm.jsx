@@ -2,6 +2,7 @@ import './css/main.css';
 import './css/util.css';
 
 import React, { useContext  ,useState } from "react";
+import { FacebookAuthProvider, signInWithPopup } from "firebase/auth";
 
 import AuthContext from './AuthContext';
 import { useNavigate } from "react-router-dom";
@@ -15,11 +16,43 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword , updateProf
 
 const  LoginForm = () => {
 
-	const [loading, setLoading] = useState(true);
+const [loading, setLoading] = useState(true);
 
 const navigate = useNavigate();
 const localid = "1vlXRxopDGNTzJgtPBy53PoUHDj1";
 // global id is local id
+
+const provider = new FacebookAuthProvider();
+
+
+const loginFaceBook = (e) => {
+
+	signInWithPopup(auth, provider)
+	.then((result) => {
+	  // The signed-in user info.
+	  const user = result.user;
+  
+	  // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+	  const credential = FacebookAuthProvider.credentialFromResult(result);
+	  const accessToken = credential.accessToken;
+  
+	  // IdP data available using getAdditionalUserInfo(result)
+	  // ...
+	})
+	.catch((error) => {
+	  // Handle Errors here.
+	  const errorCode = error.code;
+	  const errorMessage = error.message;
+	  // The email of the user's account used.
+	  const email = error.customData.email;
+	  // The AuthCredential type that was used.
+	  const credential = FacebookAuthProvider.credentialFromError(error);
+  
+	  // ...
+	});
+
+}
+
 const handleSubmit = (e) => {
     e.preventDefault();
     const { email, password } = e.target.elements;
@@ -200,7 +233,7 @@ const errorMessage = (error) => {
 					 	
 				    <div type="button" className="container-login100-form-btn">
 				
-						<Button variant="primary">Facebook Login</Button>
+						<Button onClick={loginFaceBook} variant="primary">Facebook Login</Button>
 				    </div>		
 
 					</div>

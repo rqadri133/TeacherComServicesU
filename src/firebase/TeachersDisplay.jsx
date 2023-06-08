@@ -139,6 +139,8 @@ useEffect(() => {
 
      </div>
       <div className="container">
+
+        
           <Table  className="display table">
             <thead className="thead-dark">
                 <tr>
@@ -150,7 +152,7 @@ useEffect(() => {
                 </tr>
             </thead>
             <tbody>
-            {currentTeachers.map( function(row,index)  {
+            { currentTeachers.map( function(row,index)  {
              
                 return (
                    <tr key={index}>     
@@ -170,6 +172,9 @@ useEffect(() => {
             
          </Table>
           
+
+
+
      </div>
     </div>
   );

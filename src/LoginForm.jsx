@@ -69,7 +69,7 @@ signInWithEmailAndPassword(auth, email.value, password.value)
 
 	if (user.accessToken != null ) {
 		const teacherId = user.uid;
-        navigate(`/teachers/${teacherId}` );
+        navigate(`/teacherslist/${teacherId}` );
 
   };
 	

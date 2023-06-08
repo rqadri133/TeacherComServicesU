@@ -54,13 +54,13 @@ const onSelectLanguage = (languageCode) => {
   
   const OnSubmit = (e) => {
     e.preventDefault();
+    var umid = '' ;
+       
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
         // Signed in
-        const user = userCredential.user;
-        console.log(user.uid);
-       const umid = user.uid;
-       setUID(umid);
+      const user = userCredential.user;
+       umid = user.uid;
         // ...
     })
     .catch((error) => {
@@ -70,8 +70,9 @@ const onSelectLanguage = (languageCode) => {
         // ..
     });
 
-
-
+    setUID(umid);
+    console.log(uuid);
+   
    
     //const {  phoneNumber , details ,starttimeof  } = e.target.elements;
     console.log (phoneNumber);

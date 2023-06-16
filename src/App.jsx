@@ -10,6 +10,7 @@ import Signup from './Signup';
 import StudentSignUp from './StudentSignUp';
 import TeacherSignUp from './TeacherSignUp';
 import TeachersListing from './firebase/TeachersListing';
+import TeacherSelected from './TeacherSelected';
     
 
 function App() {
@@ -31,6 +32,8 @@ function App() {
         
               
          <Route exact path="/teachers/:teacherId"  element={<TeachersDisplay/>} />
+         <Route exact path="/teacherselected/:teacherId"  element={<TeacherSelected/>} />
+      
          <Route exact path="/teacherslist/:teacherId"  element={<TeachersListing/>} />
 
           <Route exact path="/contents" element = {<TeacherContentDisplay/>} />

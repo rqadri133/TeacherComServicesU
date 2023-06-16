@@ -8,7 +8,8 @@ import Select from 'react-select'
 import {auth}  from './config';
 import {  createUserWithEmailAndPassword  } from 'firebase/auth';
 import ReactLanguageSelect from 'react-languages-select';
- 
+import 'react-languages-select/css/react-languages-select.css';
+
 //import css module
 
 
@@ -44,14 +45,16 @@ const database = getDatabase();
 
 
 
+const onSelectLanguage = (languageCode) => {
+    
+        
+        setLanguage(langaugeCode);
+    }
+      
 
  
   
  
-const onSelectLanguage = (languageCode) => {
-    setLanguage(langaugeCode);
-}
-  
   const OnSubmit = (e) => {
     e.preventDefault();
     var umid = '' ;
@@ -76,8 +79,6 @@ const onSelectLanguage = (languageCode) => {
    
     //const {  phoneNumber , details ,starttimeof  } = e.target.elements;
     console.log (phoneNumber);
-    
-     
     //const usersRef = ref(database, '/Teacher/'  );
      // example set for new firebase version improved ....    
      // Continue      
@@ -142,10 +143,14 @@ const onSelectLanguage = (languageCode) => {
                         <label htmlFor="langauge">
                             What Langauage you want to choose to communicate
                         </label>
-                        <ReactLanguageSelect
-    defaultLanguage="en"
-    onSelect={onSelectLanguage} />
-                      </div>                                             
+                        <div>
+                        <ReactLanguageSelect className="dropdownlanguage"  names={"international" }
+    defaultLanguage="en"  value={langaugeCode}  placeholder="Select Language" optionsSize= {12} selectedSize= {15} 
+    onSelect={onSelectLanguage}
+     />
+
+                        </div>
+                                             </div>                                             
               
                 <div>
                        <label htmlFor="email-address">

@@ -60,3 +60,14 @@ li {
   align-items: center;
 }
 img { width: 100px; height: 100px; border-radius: 50%; }
+
+
+.dropdownlanguage 
+{
+   width: 190px;
+   align-items:initial;
+   font-size: medium;
+   height: 80px;
+
+
+}

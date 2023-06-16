@@ -5,13 +5,13 @@ import {Button, Table} from 'react-bootstrap' ;
 import {Link , useParams} from 'react-router-dom';
 import { getDatabase, ref, onValue} from "firebase/database";
 
-
+import { useNavigate } from "react-router-dom";
 
 function TeachersListing()  {
 // age 42 not bad
 var teachersData =  [];
 const teacherInfo = useParams();
-
+const navigate = useNavigate();
  // we don't need to filter by id just show all teachers
 const uuid = teacherInfo.teacherId;
 console.log(uuid);
@@ -33,9 +33,12 @@ const  handleSubmit = (e) => {
 
 };
 const  handleChange = (e) => {
+    
+
     setCurrentValue(e.target.value);
     
     getFilteredTeachers(e.target.value);
+
     
      
 
@@ -43,6 +46,7 @@ const  handleChange = (e) => {
 
 const  AddTeacher = (e) => {
     console.log(e.target.value);
+    navigate(`/teacherselected/${uuid}` );
     
      
 
@@ -52,9 +56,11 @@ const  AddTeacher = (e) => {
  
      if(!currentFilterValue)
      {
+        console.log(currentFilterValue);
         const refer = ref(database, '/Teacher'  );
         const teachers = [];
           
+   
           onValue(refer, (snapshot) => {
               snapshot.forEach(snap => {
                  
@@ -68,13 +74,21 @@ const  AddTeacher = (e) => {
               setLoading(false)
           
         });
+  
+        if(currentFilterValue === "")
+        {
+            return;
+        }
+   
+      
 
      }
-     
-     console.log(currentTeachers);
      currentTeachers = currentTeachers.filter ( teacher => teacher.data.TeacherName.includes(currentFilterValue));
      setCurrentTeachers(currentTeachers);
   
+     
+     console.log(currentTeachers);
+     
 
 
 });

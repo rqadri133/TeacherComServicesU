@@ -5,28 +5,27 @@ import {React, useState , useEffect} from 'react'
 import {useParams} from 'react-router-dom';
 
 import { getDatabase, ref, onValue} from "firebase/database";
+import { Button } from 'react-bootstrap';
 
  function TeacherSelected() {
 
   var teachersData =  [];
     const teacherSelectedInfo = useParams();
-    var uuid = teacherSelectedInfo.teacherId;
+    const uuid = teacherSelectedInfo.teacherId;
   //  console.log(uuid);  
   
 
     
     const database = getDatabase();
     var [currentTeachers, setCurrentTeachers] = useState(teachersData);
-    var [currentUID,setUID] = useState(uuid);
+   // var [currentUID,setUID] = useState(uuid);
 
  
     
 useEffect(() => {
  
-console.log(currentUID);
   const teachers = [];
-  console.log(`/Teacher/${currentUID}/`);
-  const refer = ref(database, `/Teacher/${currentUID}/` );
+const refer = ref(database, '/Teacher' );
 //const dbRef =  database.ref('/Teacher/' + currentUID);
   
 
@@ -39,13 +38,15 @@ onValue(refer, (snapshot) => {
             console.log(keyName);
             let dataM = snap.val();
             console.log(dataM);
-            
+            console.log(uuid);
             // No Fix DB Structure
+              if(keyName === uuid)
+              {
                teachers.push({"key": keyName , "data": dataM});
+              }
         });
         setCurrentTeachers(teachers);
-        setUID(currentUID);
-    
+      
   });
   //setCurrentTeachers(prevTeachers => prevTeachers.add(teachers))  
 }, [ setCurrentTeachers]);
@@ -83,8 +84,23 @@ return (
           </li>
         </ul>
       </section>
-      
+        
   )})}
+    <section>
+        <div className='row'>
+          <div className='col0 col-sm'>
+          <Button variant='primary'> Register Demo </Button>
+        </div>
+          <div className='col0 col-sm'>
+            <Button variant='success'> Watch Video Introduction </Button>
+      
+          </div>
+        </div>
+            
+           
+          
+      </section>
+  
   </div>
 )
       }

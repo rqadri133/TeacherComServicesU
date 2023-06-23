@@ -41,38 +41,46 @@ const  handleChange = (e) => {
 
 };
 
- const  getFilteredTeachers = useCallback((currentFilterValue) => {
+const  getFilteredTeachers = useCallback((currentFilterValue) => {
  
-     if(!currentFilterValue)
-     {
-        const refer = ref(database, '/Teacher'  );
-        const teachers = [];
-          
-          onValue(refer, (snapshot) => {
-              snapshot.forEach(snap => {
-                 
-                  let keyName = snap.key;
-                  let dataM = snap.val();
-                  console.log(dataM);
-                  // No Fix DB Structure
-                     teachers.push({"key": keyName , "data": dataM});
-              });
-              setCurrentTeachers(teachers);
-              setLoading(false)
-          
-        });
-
-     }
-     
-     console.log(currentTeachers);
-     currentTeachers = currentTeachers.filter ( teacher => teacher.data.TeacherName.includes(currentFilterValue));
-     setCurrentTeachers(currentTeachers);
+    if(!currentFilterValue)
+    {
+       console.log(currentFilterValue);
+       const refer = ref(database, '/Teacher'  );
+       const teachers = [];
+         
   
+         onValue(refer, (snapshot) => {
+             snapshot.forEach(snap => {
+                
+                 let keyName = snap.key;
+                 let dataM = snap.val();
+                 console.log(dataM);
+                 // No Fix DB Structure
+                    teachers.push({"key": keyName , "data": dataM});
+             });
+             setCurrentTeachers(teachers);
+             setLoading(false)
+         
+       });
+ 
+       if(currentFilterValue === "")
+       {
+           return;
+       }
+  
+     
+
+    }
+    currentTeachers = currentTeachers.filter ( teacher => teacher.data.TeacherName.includes(currentFilterValue));
+    setCurrentTeachers(currentTeachers);
+ 
+    
+    console.log(currentTeachers);
+    
 
 
 });
-
-
 
 
 useEffect(() => {

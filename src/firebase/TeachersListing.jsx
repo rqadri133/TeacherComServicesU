@@ -19,6 +19,7 @@ console.log(uuid);
 // under one global id all and then filter based login Assigned Teacher 
 // Generate guid
 var [currentTeachers, setCurrentTeachers] = useState(teachersData);
+var [selectedTeacher,setSelectedTeacher] = useState('');
 
 
 const [loading, setLoading] = useState(true);
@@ -46,7 +47,9 @@ const  handleChange = (e) => {
 
 const  AddTeacher = (e) => {
     console.log(e.target.value);
-    navigate(`/teacherselected/${uuid}` );
+    var currentUID = e.target.value;
+    setSelectedTeacher(currentUID);
+    navigate(`/teacherselected/${currentUID}` );
     
      
 

@@ -1,11 +1,12 @@
 
 
 import './TeacherSelected.css';
-import {React, useState , useEffect} from 'react' 
-import {useParams} from 'react-router-dom';
+import {React, useState , useEffect  } from 'react' 
+import {useParams, useNavigate} from 'react-router-dom';
 
 import { getDatabase, ref, onValue} from "firebase/database";
 import { Button } from 'react-bootstrap';
+import VideoContent from './firebase/communicator/Video';
 
  function TeacherSelected() {
 
@@ -13,18 +14,38 @@ import { Button } from 'react-bootstrap';
     const teacherSelectedInfo = useParams();
     const uuid = teacherSelectedInfo.teacherId;
   //  console.log(uuid);  
-  
-
+    const navigate = useNavigate();
+   var teacherData;
     
     const database = getDatabase();
     var [currentTeachers, setCurrentTeachers] = useState(teachersData);
+    var [selectedTeacher,setSelectedTeacher] = useState(teacherData);
+    var [selectedVideoUrl,setVideoUrl] = useState('');
+    var [videodisabled,setDisabled]=useState(true);
    // var [currentUID,setUID] = useState(uuid);
 
  
     
+  const displayVideoContent = () => {
+
+      // this video url will be picked from storage container
+      const url = selectedTeacher.data.videoUrl;
+      setVideoUrl(url);
+
+      setDisabled(false);
+     // navigate(`/Video/${url}`);
+    
+
+  }
+
+
+
+
+
 useEffect(() => {
  
   const teachers = [];
+  
 const refer = ref(database, '/Teacher' );
 //const dbRef =  database.ref('/Teacher/' + currentUID);
   
@@ -45,6 +66,7 @@ onValue(refer, (snapshot) => {
                teachers.push({"key": keyName , "data": dataM});
               }
         });
+        setSelectedTeacher(teachers[0]);
         setCurrentTeachers(teachers);
       
   });
@@ -92,11 +114,12 @@ return (
           <Button variant='primary'> Register Demo </Button>
         </div>
           <div className='col0 col-sm'>
-            <Button variant='success'> Watch Video Introduction </Button>
+            <VideoContent onVideoClick={displayVideoContent} props={{videoUrl:selectedVideoUrl, disabled: videodisabled}} />
+            <Button onClick={displayVideoContent}  variant='success'> Enable Video Introduction </Button>
       
           </div>
         </div>
-            
+        
            
           
       </section>

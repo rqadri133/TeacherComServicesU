@@ -22,6 +22,7 @@ import VideoContent from './firebase/communicator/Video';
     var [selectedTeacher,setSelectedTeacher] = useState(teacherData);
     var [selectedVideoUrl,setVideoUrl] = useState('');
     var [videodisabled,setDisabled]=useState(true);
+    var [enableDisableText, setDisabledText] = useState('Enable');
    // var [currentUID,setUID] = useState(uuid);
 
  
@@ -32,7 +33,18 @@ import VideoContent from './firebase/communicator/Video';
       const url = selectedTeacher.data.videoUrl;
       setVideoUrl(url);
 
-      setDisabled(false);
+      if(videodisabled === true)
+      {
+        setDisabled(false);
+        setDisabledText("Disable");
+
+      }
+      else 
+      {
+        setDisabled(true);
+        setDisabledText("Enable");
+ 
+      }
      // navigate(`/Video/${url}`);
     
 
@@ -115,7 +127,7 @@ return (
         </div>
           <div className='col0 col-sm'>
             <VideoContent onVideoClick={displayVideoContent} props={{videoUrl:selectedVideoUrl, disabled: videodisabled}} />
-            <Button onClick={displayVideoContent}  variant='success'> Enable Video Introduction </Button>
+            <Button onClick={displayVideoContent}  variant='success'> {enableDisableText} Video Introduction </Button>
       
           </div>
         </div>

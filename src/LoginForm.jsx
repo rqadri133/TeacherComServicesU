@@ -17,6 +17,7 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword , updateProf
 const  LoginForm = () => {
 
 const [loading, setLoading] = useState(true);
+const [currentErrorMessage,setErrorMessage] = useState('');
 
 const navigate = useNavigate();
 const localid = "1vlXRxopDGNTzJgtPBy53PoUHDj1";
@@ -44,6 +45,7 @@ const loginFaceBook = (e) => {
 	.catch((error) => {
 	  // Handle Errors here.
 	  const errorCode = error.code;
+	  this.currentErrorMessage = "Unable to Login Facebook User ID Password or Credentials Not matched";
 	  console.log(errorCode);
 	  const errorMessage = error.message;
 	  // The email of the user's account used.
@@ -76,7 +78,10 @@ signInWithEmailAndPassword(auth, email.value, password.value)
     // ...
   })
   .catch((error) => {
+
     const errorMessage = error.message;
+	setErrorMessage('Unable to Login User ID password Not correct');
+
 	console.log(errorMessage);
   });
 
@@ -195,9 +200,12 @@ const errorMessage = (error) => {
 
 						
 					</div>
-
+					<div className='p-danger'>
+                        <h4>{currentErrorMessage}</h4>						
+					</div> 
+			   
 					<div className="container-login100-form-btn">
-		 			   
+				
 					<div className="container-login100-form-btn">
 				   
 					   <Button variant="success" type='submit'>Submit</Button>
@@ -214,7 +222,6 @@ const errorMessage = (error) => {
 					 &nbsp;
 					 &nbsp;
 					 &nbsp;
-					 
 					<div className="container-login100-form-btn">
 				       
 						<Button type="button" variant="dark">Apple Login</Button> 
@@ -227,7 +234,7 @@ const errorMessage = (error) => {
 					 &nbsp;
 					 	
 				    <div className="container-login100-form-btn">
-					<GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
+					<GoogleLogin onSuccess={responseMessage} onError={currentErrorMessage} />
                    </div>		
 
 					&nbsp;

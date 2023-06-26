@@ -126,7 +126,7 @@ return (
           <Button variant='primary'> Register Demo </Button>
         </div>
           <div className='col0 col-sm'>
-            <VideoContent onVideoClick={displayVideoContent} props={{videoUrl:selectedVideoUrl, disabled: videodisabled}} />
+            <VideoContent  props={{videoUrl:selectedVideoUrl, disabled: videodisabled}} />
             <Button onClick={displayVideoContent}  variant='success'> {enableDisableText} Video Introduction </Button>
       
           </div>

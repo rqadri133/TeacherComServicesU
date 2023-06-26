@@ -4,7 +4,7 @@ import './css/util.css';
 import React, { useContext  ,useState } from "react";
 import { FacebookAuthProvider, signInWithPopup } from "firebase/auth";
 
-import AuthContext from './AuthContext';
+
 import { useNavigate } from "react-router-dom";
 import {auth } from './config'; 
 
@@ -18,14 +18,18 @@ const  LoginForm = () => {
 
 const [loading, setLoading] = useState(true);
 const [currentErrorMessage,setErrorMessage] = useState('');
-
+const [found, setfound] = useState(false);
 const navigate = useNavigate();
 const localid = "1vlXRxopDGNTzJgtPBy53PoUHDj1";
 // global id is local id
 
 const provider = new FacebookAuthProvider();
 
+const setAuth=(foundme) => {
+      setfound(foundme);
 
+}
+ 
 const loginFaceBook = (e) => {
 
 	signInWithPopup(auth, provider)
@@ -36,9 +40,10 @@ const loginFaceBook = (e) => {
 	  // This gives you a Facebook Access Token. You can use it to access the Facebook API.
 	  const credential = FacebookAuthProvider.credentialFromResult(result);
 	  const accessToken = credential.accessToken;
+	  setAuth(true); 
 	  navigate(`/teachers/${accessToken}` );
   
-  
+      
 	  // IdP data available using getAdditionalUserInfo(result)
 	  // ...
 	})
@@ -58,6 +63,8 @@ const loginFaceBook = (e) => {
 
 }
 
+
+
 const handleSubmit = (e) => {
     e.preventDefault();
     const { email, password } = e.target.elements;
@@ -70,10 +77,15 @@ signInWithEmailAndPassword(auth, email.value, password.value)
 	 console.log(user);
 
 	if (user.accessToken != null ) {
+		setAuth(true);
 		const teacherId = user.uid;
-        navigate(`/teacherslist/${teacherId}` );
+        navigate(`/teacherslist/${teacherId}`);
 
-  };
+  }
+  else 
+  {
+	setAuth(false);
+  }
 	
     // ...
   })
@@ -81,7 +93,7 @@ signInWithEmailAndPassword(auth, email.value, password.value)
 
     const errorMessage = error.message;
 	setErrorMessage('Unable to Login User ID password Not correct');
-
+    setAuth(false);
 	console.log(errorMessage);
   });
 
@@ -113,7 +125,7 @@ signInWithEmailAndPassword(auth, email.value, password.value)
 	  console.log("> Updating profile")
 
 	  await updateProfile(user, {
-		displayName: "heu josu",
+		displayName: 'Profile Updated for ' + email ,
 	  });
   
 	  window.location.pathname = `/subscriptions`;
@@ -149,12 +161,7 @@ signInWithEmailAndPassword(auth, email.value, password.value)
 
   }
 
-  const  currentUserR  = useContext(AuthContext);
-  if (currentUserR) {
-	let teacherId = currentUserR.uuid;
-	navigate(`/teachers/${teacherId}/`);
-  }
-
+ 
   const responseMessage = (response) => {
 	if(response)
 	{

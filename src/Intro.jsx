@@ -3,9 +3,7 @@ import './css/util.css';
 
 import React, { useContext  } from "react";
 
-import AuthContext from './AuthContext';
 import { useNavigate } from "react-router-dom";
-import {auth } from './config'; 
 import {Button, Nav, Stack} from 'react-bootstrap';
 import {Container} from 'react-bootstrap';
 import {Row} from 'react-bootstrap';

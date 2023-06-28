@@ -47,7 +47,7 @@ function App() {
          <Route exact path="/login" element={<LoginForm />} />
         <Route exact path="/signup" element={<Signup/>} />
         <Route exact path="/studentsignup" element={<StudentSignUp/>} />
-        <Route exact path="/demoregister" element={<DemoRegister/>} />
+        <Route exact path="/demoregister/:teacherId" element={<DemoRegister/>} />
         
         <Route exact path="/teachersignup/:userId" element={<TeacherSignUp/>} />
        

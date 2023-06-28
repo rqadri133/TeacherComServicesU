@@ -11,6 +11,7 @@ import StudentSignUp from './StudentSignUp';
 import TeacherSignUp from './TeacherSignUp';
 import TeachersListing from './firebase/TeachersListing';
 import TeacherSelected from './TeacherSelected';
+import DemoRegister from './firebase/communicator/DemoRegister';
 import { useEffect , useState } from 'react';    
 import { AuthProvider } from './AuthContext';
 
@@ -46,6 +47,8 @@ function App() {
          <Route exact path="/login" element={<LoginForm />} />
         <Route exact path="/signup" element={<Signup/>} />
         <Route exact path="/studentsignup" element={<StudentSignUp/>} />
+        <Route exact path="/demoregister" element={<DemoRegister/>} />
+        
         <Route exact path="/teachersignup/:userId" element={<TeacherSignUp/>} />
        
            <Route exact path="/teachers/:teacherId"  element={<TeachersDisplay />} />

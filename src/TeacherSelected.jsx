@@ -52,7 +52,11 @@ import VideoContent from './firebase/communicator/Video';
 
 
 
+const registerDemoCycle=()=>
+{
+   navigate('/DemoRegister');
 
+}
 
 useEffect(() => {
  
@@ -123,7 +127,7 @@ return (
     <section>
         <div className='row'>
           <div className='col0 col-sm'>
-          <Button variant='primary'> Register Demo </Button>
+          <Button onClick={registerDemoCycle} variant='primary'> Register Demo </Button>
         </div>
           <div className='col0 col-sm'>
             <VideoContent  props={{videoUrl:selectedVideoUrl, disabled: videodisabled}} />

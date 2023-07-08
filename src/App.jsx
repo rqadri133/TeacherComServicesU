@@ -14,25 +14,24 @@ import TeacherSelected from './TeacherSelected';
 import DemoRegister from './firebase/communicator/DemoRegister';
 import { useEffect , useState } from 'react';    
 import { AuthProvider } from './AuthContext';
+import TeacherSlot from './firebase/TeacherSlots';
 
 function App() {
   
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    () => JSON.parse(localStorage.getItem('auth')) || false
-  );
+  const token = getToken();
 
-  const setAuth = (value) => {
-    setIsAuthenticated(value);
-    localStorage.setItem("auth", JSON.stringify(isAuthenticated))
-    //alert(value);
-  };
+  function getToken () 
+  {
+     const tokenItem =  localStorage.getItem("auth");     
+     console.log(tokenItem);
+    return tokenItem;
+  }
 
-  useEffect(()=>{
-    localStorage.setItem("auth", JSON.stringify(isAuthenticated));
-    setIsAuthenticated(isAuthenticated); 
 
-  }, [isAuthenticated]);
-
+  
+  
+  
+  
   return (
 
      <>
@@ -55,6 +54,8 @@ function App() {
          <Route exact path="/teacherselected/:teacherId"  element={<TeacherSelected  />} />
       
          <Route exact path="/teacherslist/:teacherId" element={ <TeachersListing  />} />
+         <Route exact path="/teacherslots/:teacherId/:teachername/:yearsofexpereince" element={ <TeacherSlot  />} />
+      
          
          <Route exact path="/contents" element = {<TeacherContentDisplay/>}  />
   
@@ -71,5 +72,6 @@ function App() {
 
   );
 }
+
 
 export default App;

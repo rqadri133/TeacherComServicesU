@@ -54,6 +54,7 @@ import VideoContent from './firebase/communicator/Video';
 
 const registerDemoCycle=()=>
 {
+  
    navigate(`/DemoRegister/${uuid}`);
 
 }

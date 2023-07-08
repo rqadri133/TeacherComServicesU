@@ -43,8 +43,12 @@ import {  ref, onValue} from "firebase/database";
       e.preventDefault();
   
       // Read the form data
-       const [newGoals] = e.target.values;
-       setGoals(newGoals); 
+      const teachername = selectedTeacher.data.TeacherName;
+      const yearsofexpereince = selectedTeacher.data.YearsOfTeaching;
+      navigate(`/teacherslots/${uuid}/${teachername}/${yearsofexpereince}`);
+   
+       // const [newGoals] = e.target.values;
+       // setGoals(newGoals); 
   
       
     }
@@ -129,7 +133,7 @@ import {  ref, onValue} from "firebase/database";
        
         <hr />
         <ResetButton props={{goals:ngoals}} />
-        <CoolButton props={{goals:ngoals}}  />
+        <Button type='submit' variant='primary'> Save Data </Button>
     
       </form>
      

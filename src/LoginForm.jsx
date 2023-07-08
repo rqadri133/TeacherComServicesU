@@ -18,6 +18,7 @@ const  LoginForm = () => {
 
 const [loading, setLoading] = useState(true);
 const [currentErrorMessage,setErrorMessage] = useState('');
+const [currentSetAuthentication, setIsAuthenticated] = useState(false);
 const [found, setfound] = useState(false);
 const navigate = useNavigate();
 const localid = "1vlXRxopDGNTzJgtPBy53PoUHDj1";
@@ -68,17 +69,22 @@ const loginFaceBook = (e) => {
 const handleSubmit = (e) => {
     e.preventDefault();
     const { email, password } = e.target.elements;
-  console.log(email.value);
+  
+	console.log(email.value);
+
 
 signInWithEmailAndPassword(auth, email.value, password.value)
   .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
 	 console.log(user);
-
+  
 	if (user.accessToken != null ) {
 		setAuth(true);
 		const teacherId = user.uid;
+		setIsAuthenticated(true);
+		localStorage.setItem("auth", currentSetAuthentication);
+
         navigate(`/teacherslist/${teacherId}`);
 
   }

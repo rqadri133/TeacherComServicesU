@@ -7,13 +7,13 @@ constructor (props: TeacherProfile){
 }
 render() {
   return (  
-    <div>
+    <section>
         Hi my names is <b>{this.props.name} you have requested to register a demo</b>
         <br/>
         My Total Experience is <b>{this.props.YearsOfExperience} </b> 
         <br/>
          Thanks for Submitting Your Goals
-       </div>
+       </section>
     );
   }
 }

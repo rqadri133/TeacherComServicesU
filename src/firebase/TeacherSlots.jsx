@@ -5,6 +5,8 @@ import {Link , useParams} from 'react-router-dom';
 import FirstComponent from './RemoveTeacher';
 import UserComponent from './TeacherDetailComponent';
 import TeacherProfileComponent from './TeacherDetailComponent';
+import DayTimePicker from '@mooncake-dev/react-day-time-picker';
+import './TeacherSlots.css';
 
 function TeacherSlot() {
   
@@ -20,6 +22,40 @@ function TeacherSlot() {
   var [currentTeachersSlots, setCurrentSlots] = useState(teacherSlots);
   var slotTimes = [{currentdata:{slots:[{EndTime:'', IsAvailable:'' , StartTime:'', StudentID:''}]}}]
   var [currentSlotTimes, setCurrentSlotTimes] = useState(slotTimes);
+
+  const [isScheduling, setIsScheduling] = useState(false);
+  const [isScheduled, setIsScheduled] = useState(false);
+  const [scheduleErr, setScheduleErr] = useState('');
+  const handleScheduled = date => {
+    setIsScheduling(true);
+    setScheduleErr('');
+    submitSloteRequest(date)
+      .then(json => {
+        setScheduleErr('');
+        setIsScheduled(true);
+        console.log('fake response: ', json);
+      })
+      .catch(err => {
+        setScheduleErr(err);
+      })
+      .finally(() => {
+        setIsScheduling(false);
+      });
+
+    }
+
+    function submitSloteRequest(data) {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          // Uncomment below to trigger error:
+          // return reject('Error: KABOOM!');
+          resolve({
+            status: 'ok',
+            scheduled: data
+          });
+        }, 2e3);
+      });
+    }
 
 useEffect(() => {
     
@@ -77,8 +113,16 @@ useEffect(() => {
   
     return (
  
- <div className='container'>
-    <TeacherProfileComponent name={teacherName}  YearsOfExperience={yearsofExpereince} />
+ <div className="container">
+    <h2>Select Available Time Slots Here </h2>
+    <div className='ncontent'>
+      <h3>Pick a Day and Time</h3>
+      <DayTimePicker timeSlotSizeMinutes={50}
+      isLoading={isScheduling}
+      isDone={isScheduled}
+      err={scheduleErr}
+      onConfirm={handleScheduled} />
+    </div>
 
   </div>
     )

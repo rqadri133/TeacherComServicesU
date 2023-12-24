@@ -7,7 +7,9 @@ import {Link , useParams} from 'react-router-dom';
 import FirstComponent from './RemoveTeacher';
 import UserComponent from './TeacherDetailComponent';
 import TeacherProfileComponent from './TeacherDetailComponent';
-import DateTimePicker from 'react-datetime-picker';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { renderTimeViewClock } from '@mui/x-date-pickers/timeViewRenderers';
+
 import './TeacherSlots.css';
 import Slot from './Slot';
 import { getDatabase, ref, set} from "firebase/database";
@@ -61,19 +63,24 @@ function TeacherSlot() {
  
   
     return (
+
+      <div className='container'>
+      <h1> Teachers please submit your estimated availbility slot , this will appear at Student portal</h1>  
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <StaticDateTimePicker
-        defaultValue={dayjs('2022-04-17')}
-        slots={{ tabs: CustomTabs }}
-        slotProps={{
-          tabs: {
-            hidden: false,
-            dateIcon: <LightModeIcon />,
-            timeIcon: <AcUnitIcon />,
-          },
-        }}
-      />
-    </LocalizationProvider>
+     
+     <DateTimePicker
+         label="With Time Clock"
+         viewRenderers={{
+           hours: renderTimeViewClock,
+           minutes: renderTimeViewClock,
+           seconds: renderTimeViewClock,
+         }}
+       />
+    
+   </LocalizationProvider>
+
+      </div>
+     
     )
 };
 

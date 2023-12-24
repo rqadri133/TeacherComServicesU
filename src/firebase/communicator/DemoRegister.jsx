@@ -25,7 +25,7 @@ import {  ref, onValue} from "firebase/database";
     console.log(uuid);
     // global teacher list plus all 
     // under one global id all and then filter based login Assigned Teacher 
-    // Generate guid
+    // Generate guid  
     
     
     const database = getDatabase();

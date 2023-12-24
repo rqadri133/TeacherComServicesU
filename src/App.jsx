@@ -15,6 +15,7 @@ import DemoRegister from './firebase/communicator/DemoRegister';
 import { useEffect , useState } from 'react';    
 import { AuthProvider } from './AuthContext';
 import TeacherSlot from './firebase/TeacherSlots';
+import TeacherSlotCustomPick from './firebase/TeacherSlotCustomPick';
 
 function App() {
   
@@ -55,6 +56,7 @@ function App() {
       
          <Route exact path="/teacherslist/:teacherId" element={ <TeachersListing  />} />
          <Route exact path="/teacherslots/:teacherId/:teachername/:yearsofexpereince" element={ <TeacherSlot  />} />
+         <Route exact path="/teacherslotcustompick/:teacherId/" element={ <TeacherSlotCustomPick  />} />
       
          
          <Route exact path="/contents" element = {<TeacherContentDisplay/>}  />

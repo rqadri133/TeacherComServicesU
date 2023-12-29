@@ -1,6 +1,8 @@
 import Stack from 'react-bootstrap/Stack';
 import * as React from 'react';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
+import Button from 'react-bootstrap/Button';
+
 
 import { useEffect ,useState  } from 'react';
 import {Link , useParams} from 'react-router-dom';
@@ -55,21 +57,32 @@ function TeacherSlot() {
   var teacherName = teacherInfo.teachername;
   console.log(teacherName);
   var [currentdayselected,setcurrentday] = useState('');
-  const [value, onChange] = useState<Value>(new Date());
+  const [datetimeselected, setValue] = React.useState<Dayjs | null>(dayjs('2022-04-17T15:30'));
 
   // Load Recreate from react boot strao Stack PAnel
-  
+  const saveUpdateDateModelDate = () => {
+    console.log(datetimeselected);          
+   
 
+  }
+ 
  
   
     return (
-
+     
       <div className='container'>
-      <h1> Teachers please submit your estimated availbility slot , this will appear at Student portal</h1>  
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <div>
+        <h1> Teachers please click on calender icon to confirm your availibility</h1>  
+        <span>&nbsp;</span>
+     
+        </div>  
+     
+     <div>
+     <LocalizationProvider dateAdapter={AdapterDayjs}>
      
      <DateTimePicker
-         label="With Time Clock"
+         label="With Time Clock" value={datetimeselected}
+         onChange={(newValue) => setValue(newValue)}
          viewRenderers={{
            hours: renderTimeViewClock,
            minutes: renderTimeViewClock,
@@ -78,7 +91,16 @@ function TeacherSlot() {
        />
     
    </LocalizationProvider>
-
+   <span>&nbsp;</span>
+     
+     </div>
+     <div>
+     <span>&nbsp;</span>
+     
+     <Button variant="primary" size="lg" onClick={saveUpdateDateModelDate}>
+Click To Submit your Time Slot      </Button>
+     </div>
+      
       </div>
      
     )

@@ -56,8 +56,7 @@ function App() {
       
          <Route exact path="/teacherslist/:teacherId" element={ <TeachersListing  />} />
          <Route exact path="/teacherslots/:teacherId/:teachername/:yearsofexpereince" element={ <TeacherSlot  />} />
-         <Route exact path="/teacherslotcustompick/:teacherId/" element={ <TeacherSlotCustomPick  />} />
-      
+        
          
          <Route exact path="/contents" element = {<TeacherContentDisplay/>}  />
   

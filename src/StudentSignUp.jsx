@@ -5,70 +5,97 @@ import { getDatabase, ref, set} from "firebase/database";
 import Panel from "./Panel";
 import { useMemo } from 'react'
 import Select from 'react-select'
-import {  createUserWithEmailAndPassword } from 'firebase/auth';
+import {auth}  from './config';
+import {  createUserWithEmailAndPassword  } from 'firebase/auth';
+import ReactLanguageSelect from 'react-languages-select';
+import 'react-languages-select/css/react-languages-select.css';
+
+//import css module
+
 
 import countryList from 'react-select-country-list'
 
 
 
-const TeacherSignUp = () => {
+const StudentSignUp = () => {
 
 
   
   const [phoneNumber, setPhone] = useState('');
     const [details, setDetails] = useState('');
     const [starttimeof, setTime] = useState('');
-    const [years, setYears] = useState('');
+    
     const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [langaugeCode , setLanguage] = useState('');
+    const [uuid , setUID] = useState('');    
     
     const [countrycodesel, setCountryCode] = useState('')
     const options = useMemo(() => countryList().getData(), [])
   
 
 
-  const inputRef = useRef(null);
  
   const navigate = useNavigate();
-  const teacherInfo = useParams();
 
  // we don't need to filter by id just show all teachers
-const uuid = teacherInfo.userId;
-console.log(uuid);
+
 const database = getDatabase();
 
 
 
-
- var keym = uuid;
- 
+const onSelectLanguage = (languageCode) => {
+    
+        
+        setLanguage(langaugeCode);
+    }
+      
 
  
   
+ 
   const OnSubmit = (e) => {
     e.preventDefault();
+    var umid = '' ;
+       
+    createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+        // Signed in
+      const user = userCredential.user;
+       umid = user.uid;
+        // ...
+    })
+    .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        // ..
+    });
+
+    setUID(umid);
+    console.log(uuid);
    
    
     //const {  phoneNumber , details ,starttimeof  } = e.target.elements;
     console.log (phoneNumber);
-    
-     
     //const usersRef = ref(database, '/Teacher/'  );
      // example set for new firebase version improved ....    
      // Continue      
      
    // var current = modelData[keym];
-     set(ref(database, '/Teacher/' + uuid ), 
+     set(ref(database, '/Student/' + uuid ), 
       {
         CreatedBy : '',
         CreatedDate: '',
-        TeacherClassificationID: 11,
-        TeacherName : name,
+        studentClassificationID: 11,
+        StudentName : name,
         Phone: phoneNumber ,
-        Experience : details,
-        YearsOfTeaching: years,
+        WhatToLearn : details,
         StartDate : starttimeof,
-        UID: keym,
+        UID: uuid,
         CountryCode: countrycodesel,
+        PreferedLanguage: langaugeCode,
         imageUrl : "https://firebasestorage.googleapis.com/v0/b/cubmessenger.appspot.com/o/fcIuzRj0uATpOm5Rb8HL4bbiRB03%2F613433863438.jpg?alt=media&token=542ad057-2856-45d1-9420-393989dd7fe5"
       }
       
@@ -99,18 +126,60 @@ const database = getDatabase();
 
 <main >        
     <section>
+      <div>  
         <div className="signuplogo">
-           Teacher Sign Up Additional Information
-           </div>
+        Student Sign Up
+      </div>
       
             
        <Panel isActive={true}>
-         Please make sure you enter enough information to be qualified for teacher.
+         Please make sure you enter enough information to be know about your study goals
        </Panel>
 
       
                   
-                <form>                                                                                            
+                <form>
+                <div>
+                        <label htmlFor="langauge">
+                            What Langauage you want to choose to communicate
+                        </label>
+                        <div>
+                        <ReactLanguageSelect className="dropdownlanguage"  names={"international" }
+    defaultLanguage="en"  value={langaugeCode}  placeholder="Select Language" optionsSize= {12} selectedSize= {15} 
+    onSelect={onSelectLanguage}
+     />
+
+                        </div>
+                                             </div>                                             
+              
+                <div>
+                       <label htmlFor="email-address">
+                                Email address
+                            </label>
+                            <input
+                                type="email"
+                                label="Email address"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}  
+                                required                                    
+                                placeholder="Email address"                                
+                            />
+                        </div>
+
+                        <div>
+                            <label htmlFor="password">
+                                Password
+                            </label>
+                            <input
+                                type="password"
+                                label="Create password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)} 
+                                required                                 
+                                placeholder="Password"              
+                            />
+                        </div>                                             
+                                                                                           
                     <div>
                         <label htmlFor="phoneNumber">
                             Phone Number
@@ -127,7 +196,7 @@ const database = getDatabase();
 
                     <div>
                         <label htmlFor="password">
-                            Password
+                            Enter Availibility From
                         </label>
                         <input
                             type="date"
@@ -155,25 +224,12 @@ const database = getDatabase();
 
                     <div>
                         <label htmlFor="details">
-                            Enter Details
+                        What you want to achieve , Enter goals details
                         </label>
                         <textarea name="details" type="textarea" placeholder="Enter Details" rows={5} cols={80} 
                            value={details}
                            onChange={(e) => setDetails(e.target.value)} />
                     </div>                                             
-
-                    <div>
-                        <label htmlFor="details">
-                            Enter Years of Teaching Experience
-                        </label>
-                        <input
-                            type="number"
-                            label="Enter Years"
-                            value={years}
-                            onChange={(e) => setYears(e.target.value)} 
-                            required                                 
-                            placeholder="Enter Years"              
-                        />
 
                        <div>
                         <label htmlFor="country">
@@ -185,7 +241,7 @@ const database = getDatabase();
                 
                      
                
-               </div>                                             
+                                                           
 
 
 
@@ -204,6 +260,8 @@ const database = getDatabase();
                         Sign in
                     </NavLink>
                 </p>                   
+            </div>
+
         
     </section>
 </main>
@@ -215,4 +273,4 @@ const database = getDatabase();
       );
 }
 
-export default TeacherSignUp;
+export default StudentSignUp;

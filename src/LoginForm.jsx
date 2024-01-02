@@ -1,53 +1,173 @@
 import './css/main.css';
 import './css/util.css';
 
-import React, { useContext  } from "react";
+import React, { useContext  ,useState } from "react";
+import { FacebookAuthProvider, signInWithPopup } from "firebase/auth";
 
-import AuthContext from './AuthContext';
+
 import { useNavigate } from "react-router-dom";
 import {auth } from './config'; 
 
 import {Button} from 'react-bootstrap';
 import { GoogleLogin } from '@react-oauth/google';
 
-import { signInWithEmailAndPassword } from "firebase/auth";  
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword , updateProfile } from "firebase/auth";  
 
 
 const  LoginForm = () => {
+
+const [loading, setLoading] = useState(true);
+const [currentErrorMessage,setErrorMessage] = useState('');
+const [currentSetAuthentication, setIsAuthenticated] = useState(false);
+const [found, setfound] = useState(false);
 const navigate = useNavigate();
 const localid = "1vlXRxopDGNTzJgtPBy53PoUHDj1";
 // global id is local id
+
+const provider = new FacebookAuthProvider();
+
+const setAuth=(foundme) => {
+      setfound(foundme);
+
+}
+ 
+const loginFaceBook = (e) => {
+
+	signInWithPopup(auth, provider)
+	.then((result) => {
+	  // The signed-in user info.
+	  const user = result.user;
+  
+	  // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+	  const credential = FacebookAuthProvider.credentialFromResult(result);
+	  const accessToken = credential.accessToken;
+	  setAuth(true); 
+	  navigate(`/teachers/${accessToken}` );
+  
+      
+	  // IdP data available using getAdditionalUserInfo(result)
+	  // ...
+	})
+	.catch((error) => {
+	  // Handle Errors here.
+	  const errorCode = error.code;
+	  this.currentErrorMessage = "Unable to Login Facebook User ID Password or Credentials Not matched";
+	  console.log(errorCode);
+	  const errorMessage = error.message;
+	  // The email of the user's account used.
+	  const email = error.customData.email;
+	  // The AuthCredential type that was used.
+	  const credential = FacebookAuthProvider.credentialFromError(error);
+
+	  // ...
+	});
+
+}
+
+
+
 const handleSubmit = (e) => {
     e.preventDefault();
     const { email, password } = e.target.elements;
-  console.log(email.value);
+  
+	console.log(email.value);
+
 
 signInWithEmailAndPassword(auth, email.value, password.value)
   .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
 	 console.log(user);
-
+  
 	if (user.accessToken != null ) {
-		let teacherId = user.uid;
-        navigate(`/teachers/${teacherId}/`);
-  };
+		setAuth(true);
+		const teacherId = user.uid;
+		setIsAuthenticated(true);
+		localStorage.setItem("auth", currentSetAuthentication);
+
+        navigate(`/teacherslist/${teacherId}`);
+
+  }
+  else 
+  {
+	setAuth(false);
+  }
 	
     // ...
   })
   .catch((error) => {
+
     const errorMessage = error.message;
+	setErrorMessage('Unable to Login User ID password Not correct');
+    setAuth(false);
 	console.log(errorMessage);
   });
 
 
   };
-  const  currentUserR  = useContext(AuthContext);
-  if (currentUserR) {
-	let teacherId = currentUserR.uuid;
-	navigate(`/teachers/${teacherId}/`);
+
+  const onSubmit = (e) => {
+	e.preventDefault();
+	e.preventDefault();
+    const { email, password  } = e.target.elements;
+  console.log(email.value);
+  
+	if (email &&  password) {
+	  registerUser(email,  password).then(() => {
+		console.log("User created")
+	  })
+	};
+  };
+  
+  
+  const registerUser = async (email,  password) => {
+	try {
+	  console.log("> Registering user")
+      setLoading(true);
+	  const {
+		user
+	  } = await createUserWithEmailAndPassword(auth, email, password)
+  
+	  console.log("> Updating profile")
+
+	  await updateProfile(user, {
+		displayName: 'Profile Updated for ' + email ,
+	  });
+  
+	  window.location.pathname = `/subscriptions`;
+	} catch (e) {
+	  console.log(e)
+	}
+    setLoading(false);
+  }
+  
+
+
+  const handleSubmitNew = (e) => {
+    e.preventDefault();
+    const { email, password } = e.target.elements;
+  console.log(email.value);
+  
+  createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorMessage  );
+	console.log(errorCode);
+	
+	// ..
+  });
+
+
   }
 
+ 
   const responseMessage = (response) => {
 	if(response)
 	{
@@ -93,9 +213,12 @@ const errorMessage = (error) => {
 
 						
 					</div>
-
+					<div className='p-danger'>
+                        <h4>{currentErrorMessage}</h4>						
+					</div> 
+			   
 					<div className="container-login100-form-btn">
-		 			   
+				
 					<div className="container-login100-form-btn">
 				   
 					   <Button variant="success" type='submit'>Submit</Button>
@@ -112,7 +235,6 @@ const errorMessage = (error) => {
 					 &nbsp;
 					 &nbsp;
 					 &nbsp;
-					 
 					<div className="container-login100-form-btn">
 				       
 						<Button type="button" variant="dark">Apple Login</Button> 
@@ -125,7 +247,7 @@ const errorMessage = (error) => {
 					 &nbsp;
 					 	
 				    <div className="container-login100-form-btn">
-					<GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
+					<GoogleLogin onSuccess={responseMessage} onError={currentErrorMessage} />
                    </div>		
 
 					&nbsp;
@@ -135,7 +257,7 @@ const errorMessage = (error) => {
 					 	
 				    <div type="button" className="container-login100-form-btn">
 				
-						<Button variant="primary">Facebook Login</Button>
+						<Button onClick={loginFaceBook} variant="primary">Facebook Login</Button>
 				    </div>		
 
 					</div>

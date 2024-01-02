@@ -138,6 +138,30 @@ iframe {
   margin: 0 auto;
 }
 
+.container {
+  background-color: lightgray;
+
+
+}
+
+.signuplogo {
+   background-image: url(../images/headerImage.jpg);
+   width: 90%;  
+   min-height: 20vh;
+   display: -webkit-box;
+   display: -webkit-flex;
+   display: -moz-box;
+   display: -ms-flexbox;
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: left;
+   align-items: left;
+   padding: 15px;
+   color:white;
+   font-weight: bold;
+   
+
+}
 .container-header
 {
   width: 100%;  

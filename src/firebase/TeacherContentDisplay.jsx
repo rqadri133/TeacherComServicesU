@@ -5,7 +5,7 @@ import {Container} from 'react-bootstrap';
 import {Nav} from 'react-bootstrap';
 import {Navbar} from 'react-bootstrap';
 import {useParams} from 'react-router-dom';
-
+import './TeacherContentDisplay.css';
 
 
 function TeacherContentDisplay(props) {
@@ -14,7 +14,7 @@ function TeacherContentDisplay(props) {
 
   return (
     <>
-      <Navbar bg="dark" variant="dark">
+      <Navbar bg="light" variant="light">
         <Container>
           <Navbar.Brand href="#home">Documents</Navbar.Brand>
           <Nav className="me-auto">
@@ -25,7 +25,7 @@ function TeacherContentDisplay(props) {
         </Container>
       </Navbar>
       <br />
-      <Navbar bg="primary" variant="dark">
+      <Navbar bg="light" variant="light">
         <Container>
           <Navbar.Brand href="#home">Videos</Navbar.Brand>
           <Nav className="me-auto">

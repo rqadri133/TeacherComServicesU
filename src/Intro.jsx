@@ -3,10 +3,8 @@ import './css/util.css';
 
 import React, { useContext  } from "react";
 
-import AuthContext from './AuthContext';
 import { useNavigate } from "react-router-dom";
-import {auth } from './config'; 
-import {Button, Nav} from 'react-bootstrap';
+import {Button, Nav, Stack} from 'react-bootstrap';
 import {Container} from 'react-bootstrap';
 import {Row} from 'react-bootstrap';
 import {Col} from 'react-bootstrap';
@@ -22,27 +20,38 @@ const Proceed = () => {
 
 
 }
+
 const ProceedToTeacherInfo = () => {
-  navigate("teachersignup/");
+  navigate("signup/");
 
 
 }
 
 
-return (
+const ProceedToStudentInfo = () => {
+  navigate("studentsignup/");
 
-  <Container>
-     
+
+}
+
+return (
+<Stack gap={3}>
+<Container>
      <Row>
 		      <Col>
-           <Button variant="success">Student Sign Up</Button>
-      			<button className="btn btn-primary"  onClick={Proceed}>
+          <Button className="success"  onClick={ProceedToStudentInfo}>
+							Student Sign Up
+						</Button>
+         		<Button className="primary"  onClick={Proceed}>
 							Login
-						</button>
+						</Button>
             <Button variant="info" onClick={ProceedToTeacherInfo}>Teacher Sign Up
             </Button> 
 					</Col>
     </Row>
+</Container>
+  <Container>
+     
     <Row>
     <Col>
        
@@ -69,6 +78,9 @@ return (
         
     </Container>        
 
+
+  </Stack>
+  
 );
 
 

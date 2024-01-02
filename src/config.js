@@ -7,7 +7,15 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
+
+
+// Import the functions you need from the SDKs you need
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+export const firebaseConfig = {
   apiKey: "AIzaSyBak97Kjb9TEnRexxTD0kfmimDdzfpbhXc",
   authDomain: "teachercomdb.firebaseapp.com",
   databaseURL: "https://teachercomdb-default-rtdb.firebaseio.com",
@@ -18,11 +26,10 @@ const firebaseConfig = {
   measurementId: "G-1FTBSYGJ2G"
 };
 
-// Initialize Firebase
-export const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-
+const app = initializeApp(firebaseConfig);
 export const db = getDatabase();
- 
 
-export default firebaseConfig;
+export const auth = getAuth(app);
+export default app ;
+
+

@@ -14,6 +14,7 @@ const teacherInfo = useParams();
 
  // we don't need to filter by id just show all teachers
 const uuid = teacherInfo.teacherId;
+console.log(uuid);
 // global teacher list plus all 
 // under one global id all and then filter based login Assigned Teacher 
 // Generate guid
@@ -40,42 +41,51 @@ const  handleChange = (e) => {
 
 };
 
- const  getFilteredTeachers = useCallback((currentFilterValue) => {
+const  getFilteredTeachers = useCallback((currentFilterValue) => {
  
-     if(!currentFilterValue)
-     {
-        const refer = ref(database, '/Teacher/' + uuid );
-        const teachers = [];
-          
-          onValue(refer, (snapshot) => {
-              snapshot.forEach(snap => {
-                 
-                  let keyName = snap.key;
-                  let dataM = snap.val();
-                  // No Fix DB Structure
-                     teachers.push({"key": keyName , "data": dataM});
-              });
-              setCurrentTeachers(teachers);
-              setLoading(false)
-          
-        });
-
-     }
-     
-     console.log(currentTeachers);
-     currentTeachers = currentTeachers.filter ( teacher => teacher.data.TeacherName.includes(currentFilterValue));
-     setCurrentTeachers(currentTeachers);
+    if(!currentFilterValue)
+    {
+       console.log(currentFilterValue);
+       const refer = ref(database, '/Teacher'  );
+       const teachers = [];
+         
   
+         onValue(refer, (snapshot) => {
+             snapshot.forEach(snap => {
+                
+                 let keyName = snap.key;
+                 let dataM = snap.val();
+                 console.log(dataM);
+                 // No Fix DB Structure
+                    teachers.push({"key": keyName , "data": dataM});
+             });
+             setCurrentTeachers(teachers);
+             setLoading(false)
+         
+       });
+ 
+       if(currentFilterValue === "")
+       {
+           return;
+       }
+  
+     
+
+    }
+    currentTeachers = currentTeachers.filter ( teacher => teacher.data.TeacherName.includes(currentFilterValue));
+    setCurrentTeachers(currentTeachers);
+ 
+    
+    console.log(currentTeachers);
+    
 
 
 });
 
 
-
-
 useEffect(() => {
   console.log(uuid);  
-  const refer = ref(database, '/Teacher/' + uuid );
+  const refer = ref(database, '/Teacher/'  );
   const teachers = [];
     
     onValue(refer, (snapshot) => {
@@ -93,9 +103,6 @@ useEffect(() => {
   //setCurrentTeachers(prevTeachers => prevTeachers.add(teachers))  
 }, [ setCurrentTeachers]);
   
-  if (loading) {
-    return <p>Loading...</p>;
-  }
 
  
  return (
@@ -140,6 +147,8 @@ useEffect(() => {
 
      </div>
       <div className="container">
+
+        
           <Table  className="display table">
             <thead className="thead-dark">
                 <tr>
@@ -151,7 +160,7 @@ useEffect(() => {
                 </tr>
             </thead>
             <tbody>
-            {currentTeachers.map( function(row,index)  {
+            { currentTeachers.map( function(row,index)  {
              
                 return (
                    <tr key={index}>     
@@ -171,6 +180,9 @@ useEffect(() => {
             
          </Table>
           
+
+
+
      </div>
     </div>
   );

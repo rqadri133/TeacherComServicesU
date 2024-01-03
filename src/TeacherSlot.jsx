@@ -6,14 +6,9 @@ import Button from 'react-bootstrap/Button';
 
 import { useEffect ,useState  } from 'react';
 import {Link , useParams} from 'react-router-dom';
-import FirstComponent from './RemoveTeacher';
-import UserComponent from './TeacherDetailComponent';
-import TeacherProfileComponent from './TeacherDetailComponent';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { renderTimeViewClock } from '@mui/x-date-pickers/timeViewRenderers';
 
-import './TeacherSlots.css';
-import Slot from './Slot';
 import { getDatabase, ref, set} from "firebase/database";
 import 'react-datetime-picker/dist/DateTimePicker.css';
 import 'react-calendar/dist/Calendar.css';
@@ -21,7 +16,6 @@ import 'react-clock/dist/Clock.css';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import Box from '@mui/material/Box';
-import { StaticDateTimePicker } from '@mui/x-date-pickers/StaticDateTimePicker';
 import {
   DateTimePickerTabs,
   DateTimePickerTabsProps,
@@ -56,7 +50,8 @@ function TeacherSlot() {
   var teacherName = teacherInfo.teachername;
   console.log(teacherName);
   var [currentdayselected,setcurrentday] = useState('');
-  const [datetimeselected, setValue] = React.useState<Dayjs | null>(dayjs('2022-04-17T15:30'));
+  
+  var [datetimeselected, setValue] = useState('2022-04-17T15:30');
 
   // Load Recreate from react boot strao Stack PAnel
   const saveUpdateDateModelDate = () => {
@@ -73,7 +68,7 @@ function TeacherSlot() {
   <LocalizationProvider dateAdapter={AdapterDayjs}>
   
   <DateTimePicker
-      label="With Time Clock" value={datetimeselected}
+      label="With Time Clock" value={setValue}
       viewRenderers={{
         hours: renderTimeViewClock,
         minutes: renderTimeViewClock,

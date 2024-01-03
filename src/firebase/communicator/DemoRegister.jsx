@@ -45,7 +45,7 @@ import {  ref, onValue} from "firebase/database";
       // Read the form data
       const teachername = selectedTeacher.data.TeacherName;
       const yearsofexpereince = selectedTeacher.data.YearsOfTeaching;
-      navigate(`/teacherslots/${uuid}/${teachername}/${yearsofexpereince}`);
+      navigate(`/teacherslot/{uuid}/{teachername}/{yearsofexpereince}`);
    
        // const [newGoals] = e.target.values;
        // setGoals(newGoals); 

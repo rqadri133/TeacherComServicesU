@@ -1,10 +1,10 @@
 import * as React from "react";
 import User from './TeacherProfile'
 import TeacherProfile from "./TeacherProfile";
-export default class TeacherProfileComponent extends React.Component<User, {}> {
+
 constructor (props: TeacherProfile){
   super(props);
-}
+}export default class TeacherProfileComponent extends React.Component<User, {}> {
 render() {
   return (  
     <section>

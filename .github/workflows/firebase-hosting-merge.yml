@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: npm uninstall react && npm uninstall react-bootstrap && npm uninstall firebase
+      - run: npm uninstall react && npm uninstall react-bootstrap && npm uninstall firebase && npm uninstall react-firebase
       - run: >-
           npm install && npm install react && npm install react-bootstrap && npm
           install firebase && npm install react-webcam && npm ci &&  npm run build --legacy-peer-deps

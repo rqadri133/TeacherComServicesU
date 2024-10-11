@@ -37,7 +37,7 @@ function WelcomeDialog() {
   <Col>
   <Dialog
       title="TeacherCom"
-      message="Language Learning Platform using AI" />
+      message="Language Learning Platform" />
 
   </Col>
   

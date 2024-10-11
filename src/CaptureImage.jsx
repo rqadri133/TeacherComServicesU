@@ -1,11 +1,15 @@
 import Webcam from "react-webcam";
-import { useCallback, useRef, useState } from "react"; // import useCallback
+import { useCallback, useRef, useState ,useEffect } from "react"; // import useCallback
+
 
 const CaptureImage = () => {
   const webcamRef = useRef(null);
   const [imgSrc, setImgSrc] = useState(null);
 
   // create a capture function
+
+
+  
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot();
     setImgSrc(imageSrc);

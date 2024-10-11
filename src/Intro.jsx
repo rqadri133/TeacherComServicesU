@@ -34,6 +34,12 @@ const ProceedToStudentInfo = () => {
 
 }
 
+const ProcessSpecialKids = () => {
+  navigate("specialkidsimagelogin/");
+
+
+}
+
 return (
 <Stack gap={3}>
 <Container>
@@ -47,6 +53,10 @@ return (
 						</Button>
             <Button variant="info" onClick={ProceedToTeacherInfo}>Teacher Sign Up
             </Button> 
+            <Button variant="danger" onClick={ProcessSpecialKids}>Special Kids
+            </Button> 
+
+
 					</Col>
     </Row>
 </Container>

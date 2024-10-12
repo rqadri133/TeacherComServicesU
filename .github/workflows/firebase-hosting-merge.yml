@@ -13,9 +13,11 @@ jobs:
       - uses: actions/checkout@v2
       - run: npm uninstall react --legacy-peer-deps && npm uninstall react react-dom ---legacy-peer-deps && npm uninstall react-bootstrap --legacy-peer-deps && npm uninstall firebase --legacy-peer-deps &&  npm uninstall react-firebase --legacy-peer-deps
       - run: npm uninstall react-google-login --legacy-peer-deps
+      - run: npm uninstall react-scripts --legacy-peer-deps && npm uninstall typescript --legacy-peer-deps
       - run: >-
-          npm install --legacy-peer-deps && npm install react --legacy-peer-deps && npm install react react-dom  && npm install react-bootstrap --legacy-peer-deps && npm
+          npm install --legacy-peer-deps && npm install react --legacy-peer-deps && npm install react react-dom  &&  npm install react-scripts --legacy-peer-deps && npm install typescript --legacy-peer-deps && npm install react-bootstrap --legacy-peer-deps && npm
           install firebase --legacy-peer-deps && npm install react-webcam --legacy-peer-deps && npm install react-google-login --legacy-peer-deps && npm ci  &&  npm run build --legacy-peer-deps
+      
       - run:  npm audit fix --force 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:

@@ -52,16 +52,13 @@ function App() {
        
            <Route exact path="/teachers/:teacherId"  element={<TeachersDisplay />} />
          <Route exact path="/teacherselected/:teacherId"  element={<TeacherSelected  />} />
+       <Route exact path="/specialkidsimagelogin"  element={<CaptureImage  />} />
+        
       
          <Route exact path="/teacherslist/:teacherId" element={ <TeachersListing  />} />
          <Route exact path="/teacherslot/:teacherId/:teachername/:yearsofexpereince" element = {<TeacherSlot/>}  />
-            <Route exact path="/specialkidsimagelogin"  element={<CaptureImage  />} />
-
-          
-         <Route exact path="/contents" element = {<TeacherContentDisplay/>}  />
-  
         
-              
+
           </Routes>
      </BrowserRouter>  
      </AuthProvider>

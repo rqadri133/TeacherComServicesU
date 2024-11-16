@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import AuthContext from './AuthContext'
 
-import firebase from "firebase";
+import {firebase} from "firebase";
 import { initializeApp } from "firebase-admin";
 import { getAuth } from "firebase/auth";
 

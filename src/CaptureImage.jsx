@@ -1,6 +1,5 @@
 import Webcam from "react-webcam";
-import { useCallback, useRef, useState ,useEffect } from "react"; // import useCallback
-
+import { useCallback, useRef, useState ,usef } from "react"; // import useCallback
 
 const CaptureImage = () => {
   const webcamRef = useRef(null);

@@ -40,6 +40,12 @@ const ProcessSpecialKids = () => {
 
 }
 
+
+const ProceedToQuestionAnswers = () => {
+   navigate("chatbot/");
+
+}
+
 return (
 <Stack gap={3}>
 <Container>
@@ -56,6 +62,8 @@ return (
             <Button variant="danger" onClick={ProcessSpecialKids}>Special Kids
             </Button> 
 
+            <Button variant="success" onClick={ProceedToQuestionAnswers}>Questions And Answers
+            </Button> 
 
 					</Col>
     </Row>
